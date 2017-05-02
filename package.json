@@ -1,0 +1,30 @@
+{
+  "name": "shadow-shroud",
+  "version": "1.0.0",
+  "description": "Rpi NodeJS backend to run the shadow dancing shroud at PDF",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robert-marriott/shadow-shroud.git"
+  },
+  "keywords": [
+    "mp3",
+    "shadow",
+    "dance",
+    "shroud",
+    "burn",
+    "bluetooth"
+  ],
+  "author": "robert-marriott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robert-marriott/shadow-shroud/issues"
+  },
+  "homepage": "https://github.com/robert-marriott/shadow-shroud#readme",
+  "dependencies": {
+    "player": "^0.6.1"
+  }
+}
