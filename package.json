@@ -2,7 +2,7 @@
   "name": "shadow-shroud",
   "version": "1.0.0",
   "description": "Rpi NodeJS backend to run the shadow dancing shroud at PDF",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/robert-marriott/shadow-shroud#readme",
   "dependencies": {
+    "noble": "^1.8.1",
     "player": "^0.6.1"
   }
 }
