@@ -4,48 +4,97 @@
 // a button trigger. It will also modulate LED's.                     //
 // ================================================================== //
 console.log("[INFO] Starting Shadow-Shroud (app.js)");
-
-// Import necessary libraries.
+console.log("[INFO] Arguements passed to app.js:");
+process.argv.forEach(function (val, index, array) {
+  console.log(index + ': ' + val);
+});
+///////////////////////////Libraries////////////////////////////////////
 var Gpio = require('pigpio').Gpio;
+// var fs = require("fs");
+// var lame = require("lame");
+// var Speaker = require("speaker");
+// var player = require("player");
 
+////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
 var ledPins = [14,15,18,17,27,22,25,8,7];
-var butPins = [2,3,4];
+var btnPins = [2,3,4];
 
-// Initialize empty array to push new gpio objects to
+///////////////////////Global Variables/////////////////////////////////
 var leds = [];
-var buts = [];
+var btns = [];
+var globalState = 0;
 
-// initialise all the output pins
+///////////////////////////initialize///////////////////////////////////
 for (var i = 0; i<ledPins.length; i++) {
  var led = new Gpio(ledPins[i], {mode: Gpio.OUTPUT});
  leds.push(led);
+} //Output pins
+
+for (var i = 0; i<btnPins.length; i++) {
+ var btn = new Gpio(btnPins[i], {
+    mode: Gpio.INPUT,
+    pullUpDown: Gpio.PUD_DOWN,
+    edge: Gpio.EITHER_EDGE
+  });
+ btns.push(btn);
+} //Input pins
+////////////////////////////////////////////////////////////////////////////////
+// There are going to be 5ish states.
+// State 1: Wait => Lights fade green blue, maybe purple. "Cool/Slow"
+// State 2: Button 1 => Inspire. Lights fade through a few cooler to warmer colors
+// State 3: Button 2 => Intrigue. Fast paced, warm colors. One song.
+// State 4: Button 3 => Party! Fast paced, strobing, 3 songs.
+// State 5: Acknowledge => pulse of bright white light that fades on button press
+////////////////////////////////////////////////////////////////////////////////
+
+function acknowledgeButtonPress(){
+  //button has been pressed so:
+  //briefly (1s bright, 3 sec fade)
+    //turn all led's white
+    //fade out to black
 }
 
-// initialise all the input button pins
-for (var i = 0; i<butPins.length; i++) { 
- var but = new Gpio(butPins[i], {mode: Gpio.INPUT});
- buts.push(but);
+setInterval(waitForInput, 16); //run every 16ms
+function waitForInput(){
+  //this whole function might be on setInterval. running repteadly waiting.
+  //when button state is nothing/0
+    //pulse green to blue with some purple
+  //When button press/interrupt detected
+    //set global button state variable
+    btns[0].on('interrupt', function (level??) {
+      acknowledgeButtonPress();
+      inspire();
+    });
+    btns[1].on('interrupt', function (level) {
+      acknowledgeButtonPress();
+      inspire();
+    });
+    btns[2].on('interrupt', function (level) {
+      acknowledgeButtonPress();
+      inspire();
+    });
 }
 
-// get a loop running 60 times a second (1000/60 = 16.6)
-setInterval(loop, 16);
 
-function loop() {
+function inspire(){
+  //play intro MP3
+  //play inspirational MP3
+  //change led's to cool/slow as it is going
+  //return to wait state
+}
 
- for(var i = 0; i<leds.length; i++) {
+function intrigue(){
+  //play solo 'intrigue show me what you got'
+  //play one song
+  //return to wait state
+}
 
-   var led = leds[i];
-   // calculate a sin wave for brightness dependent on time and
-   // position in the row of LEDs
-   var brightness = Math.sin(((Date.now()/16)+(i*5))*0.2)*0.5 + 0.5;
-   // a quick way to do a cubic ease in - it means the LEDs get brighter
-   // slower. It compensates for the fact that LEDs get bright quick.
-   brightness*=brightness*brightness;
-   // the pigpio library complains if you send it a floating point number
-   // so we have to round it down.
-   brightness = Math.floor(brightness*255);
-   led.pwmWrite(brightness);
- }
-
+function danceParty(){
+  //play solo 'dance party clip'
+  //pick 3 songs from list at random
+  //play songs
+  //that stuff is async so
+  //dance party LED's
+  //return to wait state
 }
