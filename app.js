@@ -17,7 +17,11 @@ var Gpio = require('pigpio').Gpio;
 
 ////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
-var ledPins = [14,15,18,17,27,22,25,8,7];
+var ledPins = [14,15,18,   17,27,22,   25,8,7]; //full set
+var reds = [14,17,25];
+var grns = [15,27,8];
+var blus = [18,22,7];
+//buttons
 var btnPins = [2,3,4];
 
 ///////////////////////Global Variables/////////////////////////////////
@@ -26,19 +30,26 @@ var btns = [];
 var globalState = 0;
 
 ///////////////////////////initialize///////////////////////////////////
+//All output LED pins as one array.
 for (var i = 0; i<ledPins.length; i++) {
  var led = new Gpio(ledPins[i], {mode: Gpio.OUTPUT});
  leds.push(led);
-} //Output pins
-
+}
+// LED channels sorted into R G and B
+for (var i = 0; i<reds.length; i++) { var led = new Gpio(reds[i], {mode: Gpio.OUTPUT}); reds.push(led) }
+for (var i = 0; i<grns.length; i++) { var led = new Gpio(grns[i], {mode: Gpio.OUTPUT}); grns.push(led) }
+for (var i = 0; i<blus.length; i++) { var led = new Gpio(blus[i], {mode: Gpio.OUTPUT}); blus.push(led) }
+//Input pins for 3 large red arcade buttons
 for (var i = 0; i<btnPins.length; i++) {
  var btn = new Gpio(btnPins[i], {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.EITHER_EDGE
+    edge: Gpio.RISING_EDGE
   });
  btns.push(btn);
-} //Input pins
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // There are going to be 5ish states.
 // State 1: Wait => Lights fade green blue, maybe purple. "Cool/Slow"
@@ -48,36 +59,42 @@ for (var i = 0; i<btnPins.length; i++) {
 // State 5: Acknowledge => pulse of bright white light that fades on button press
 ////////////////////////////////////////////////////////////////////////////////
 
-function acknowledgeButtonPress(){
-  //button has been pressed so:
-  //briefly (1s bright, 3 sec fade)
-    //turn all led's white
-    //fade out to black
-}
+////////////////////////////Button Interrupt checking///////////////////////////
+btns[0].on('interrupt', function () {
+  acknowledgeButtonPress(1);
+  setTimeout(   inspire(),2*10)      ;
+});
+btns[1].on('interrupt', function () {
+  acknowledgeButtonPress(2);
+  setTimeout(   intrigue(),2*10)     ;
+});
+btns[2].on('interrupt', function () {
+  acknowledgeButtonPress(3);
+  setTimeout(   danceParty(),2*10)   ;
+});
 
-setInterval(waitForInput, 16); //run every 16ms
+///////////////////////////////////Main Methods/////////////////////////////////
+//setInterval(waitForInput, 16); //run every 16ms
 function waitForInput(){
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
   //When button press/interrupt detected
     //set global button state variable
-    btns[0].on('interrupt', function (level??) {
-      acknowledgeButtonPress();
-      inspire();
-    });
-    btns[1].on('interrupt', function (level) {
-      acknowledgeButtonPress();
-      inspire();
-    });
-    btns[2].on('interrupt', function (level) {
-      acknowledgeButtonPress();
-      inspire();
-    });
 }
 
+function acknowledgeButtonPress(btn){
+  console.log("Button: "+btn+" press acknowledged");
+  for(var i = 0; i<leds.length; i++) { leds[i].pwmWrite(255); }
+
+  //button has been pressed so:
+  //briefly (1s bright, 3 sec fade)
+    //turn all led's white
+    //fade out to black
+}
 
 function inspire(){
+  console.log("Inspire function triggered");
   //play intro MP3
   //play inspirational MP3
   //change led's to cool/slow as it is going
@@ -85,12 +102,14 @@ function inspire(){
 }
 
 function intrigue(){
+  console.log("intrigue function triggered");
   //play solo 'intrigue show me what you got'
   //play one song
   //return to wait state
 }
 
 function danceParty(){
+  console.log("danceParty function triggered");
   //play solo 'dance party clip'
   //pick 3 songs from list at random
   //play songs
