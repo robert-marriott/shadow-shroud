@@ -23,7 +23,7 @@
   ],
  "dependencies" :
   { "pigpio"  : "latest",
-    "rpi-rgb" : ">=1.0.2 <2.1.2",
+    "rpi-rgb" : ">=1.0.2 <2.1.2"
 },
   "author": "robert marriott",
   "license": "ISC",
