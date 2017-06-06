@@ -86,6 +86,7 @@ function waitForInput(){
 function acknowledgeButtonPress(btn){
   console.log("Button: "+btn+" press acknowledged");
   for(var i = 0; i<leds.length; i++) { leds[i].pwmWrite(255); }
+  //maybe check if I can do 'on' during button press and 'fade away' on falling edge
 
   //button has been pressed so:
   //briefly (1s bright, 3 sec fade)
