@@ -140,6 +140,7 @@ function danceParty(){
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(100); }
     }
     timer+=16;
+    console.log("time value is: "+timer);
   }
   ,16);
   //play solo 'dance party clip'
