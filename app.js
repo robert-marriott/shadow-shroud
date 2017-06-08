@@ -138,8 +138,9 @@ function danceParty(){
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(255); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0); }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(100); }
+      timer+=16;
     }
-    timer+=16;
+
     console.log("time value is: "+timer);
   }
   ,16);
