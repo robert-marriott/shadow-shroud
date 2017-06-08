@@ -64,20 +64,6 @@ for (var i = 0; i<btnPins.length; i++) {
 // State 5: Acknowledge => pulse of bright white light that fades on button press
 ////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////Button Interrupt checking///////////////////////////
-btns[0].on('interrupt', function () {
-  acknowledgeButtonPress(1);
-  setTimeout(   inspire(),2*10)      ;
-});
-btns[1].on('interrupt', function () {
-  acknowledgeButtonPress(2);
-  setTimeout(   intrigue(),2*10)     ;
-});
-btns[2].on('interrupt', function () {
-  acknowledgeButtonPress(3);
-  setTimeout(   danceParty(),2*10)   ;
-});
-
 ///////////////////////////////////Main Methods/////////////////////////////////
 //setInterval(waitForInput, 16); //run every 16ms
 function waitForInput(){
@@ -165,3 +151,17 @@ function danceParty(){
 }
 
 setInterval(waitForInput,16); //cycle through wait time indefinitely
+
+////////////////////////////Button Interrupt checking///////////////////////////
+btns[0].on('interrupt', function () {
+  acknowledgeButtonPress(1);
+  setTimeout(   inspire(),2*1000)      ;
+});
+btns[1].on('interrupt', function () {
+  acknowledgeButtonPress(2);
+  setTimeout(   intrigue(),2*1000)     ;
+});
+btns[2].on('interrupt', function () {
+  acknowledgeButtonPress(3);
+  setTimeout(   danceParty(),2*1000)   ;
+});
