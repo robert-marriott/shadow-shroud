@@ -155,13 +155,13 @@ setInterval(waitForInput,16); //cycle through wait time indefinitely
 ////////////////////////////Button Interrupt checking///////////////////////////
 btns[0].on('interrupt', function () {
   acknowledgeButtonPress(1);
-  setTimeout(   inspire(),2*1000)      ;
+  setTimeout(   inspire,2000)      ;
 });
 btns[1].on('interrupt', function () {
   acknowledgeButtonPress(2);
-  setTimeout(   intrigue(),2*1000)     ;
+  setTimeout(   intrigue,2000)     ;
 });
 btns[2].on('interrupt', function () {
   acknowledgeButtonPress(3);
-  setTimeout(   danceParty(),2*1000)   ;
+  setTimeout(   danceParty,2000)   ;
 });
