@@ -18,15 +18,20 @@ var Gpio = require('pigpio').Gpio;
 ////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
 var ledPins = [14,15,18,   17,27,22,   25,8,7]; //full set
-var reds = [14,17,25];
-var grns = [15,27,8];
-var blus = [18,22,7];
+var redPins = [14,17,25];
+var grnPins = [15,27,8];
+var bluPins = [18,22,7];
 //buttons
 var btnPins = [2,3,4];
 
 ///////////////////////Global Variables/////////////////////////////////
 var leds = [];
 var btns = [];
+// Empty arrays to hold gpio objects
+var reds = [];
+var grns = [];
+var blus = [];
+
 var globalState = 0;
 
 ///////////////////////////initialize///////////////////////////////////
@@ -36,9 +41,9 @@ for (var i = 0; i<ledPins.length; i++) {
  leds.push(led);
 }
 // LED channels sorted into R G and B
-for (var i = 0; i<reds.length; i++) { var led = new Gpio(reds[i], {mode: Gpio.OUTPUT}); reds.push(led) }
-for (var i = 0; i<grns.length; i++) { var led = new Gpio(grns[i], {mode: Gpio.OUTPUT}); grns.push(led) }
-for (var i = 0; i<blus.length; i++) { var led = new Gpio(blus[i], {mode: Gpio.OUTPUT}); blus.push(led) }
+for (var i = 0; i<redPins.length; i++) { var led = new Gpio(redPins[i], {mode: Gpio.OUTPUT}); reds.push(led) }
+for (var i = 0; i<grnPins.length; i++) { var led = new Gpio(grnPins[i], {mode: Gpio.OUTPUT}); grns.push(led) }
+for (var i = 0; i<bluPins.length; i++) { var led = new Gpio(bluPins[i], {mode: Gpio.OUTPUT}); blus.push(led) }
 //Input pins for 3 large red arcade buttons
 for (var i = 0; i<btnPins.length; i++) {
  var btn = new Gpio(btnPins[i], {
@@ -76,6 +81,9 @@ btns[2].on('interrupt', function () {
 ///////////////////////////////////Main Methods/////////////////////////////////
 //setInterval(waitForInput, 16); //run every 16ms
 function waitForInput(){
+  for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
+  for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
+  for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
@@ -96,6 +104,19 @@ function acknowledgeButtonPress(btn){
 
 function inspire(){
   console.log("Inspire function triggered");
+
+  timer = 0;
+  timermax = 2000;
+  setInterval( function(){
+    while (timer<timermax){
+      for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
+      for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0); }
+      for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(255); }
+    }
+    timer+=16;
+  }
+  ,16);
+
   //play intro MP3
   //play inspirational MP3
   //change led's to cool/slow as it is going
@@ -104,6 +125,19 @@ function inspire(){
 
 function intrigue(){
   console.log("intrigue function triggered");
+
+  timer = 0;
+  timermax = 2000;
+  setInterval( function(){
+    while (timer<timermax){
+      for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(200); }
+      for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(100); }
+      for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(75); }
+    }
+    timer+=16;
+  }
+  ,16);
+
   //play solo 'intrigue show me what you got'
   //play one song
   //return to wait state
@@ -111,6 +145,17 @@ function intrigue(){
 
 function danceParty(){
   console.log("danceParty function triggered");
+  timer = 0;
+  timermax = 2000;
+  setInterval( function(){
+    while (timer<timermax){
+      for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(255); }
+      for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0); }
+      for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(100); }
+    }
+    timer+=16;
+  }
+  ,16);
   //play solo 'dance party clip'
   //pick 3 songs from list at random
   //play songs
@@ -118,3 +163,5 @@ function danceParty(){
   //dance party LED's
   //return to wait state
 }
+
+setInterval(waitForInput,16); //cycle through wait time indefinitely
