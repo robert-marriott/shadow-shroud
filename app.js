@@ -49,7 +49,8 @@ for (var i = 0; i<btnPins.length; i++) {
  var btn = new Gpio(btnPins[i], {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.RISING_EDGE
+    edge: Gpio.RISING_EDGE,
+    alert: true
   });
  btns.push(btn);
 }
@@ -159,15 +160,15 @@ function danceParty(){
 setInterval(waitForInput,16); //cycle through wait time indefinitely
 
 ////////////////////////////Button Interrupt checking///////////////////////////
-btns[0].on('interrupt', function () {
+btns[0].on('alert', function () {
   acknowledgeButtonPress(1);
   setTimeout(   inspire,2000)      ;
 });
-btns[1].on('interrupt', function () {
+btns[1].on('alert', function () {
   acknowledgeButtonPress(2);
   setTimeout(   intrigue,2000)     ;
 });
-btns[2].on('interrupt', function () {
+btns[2].on('alert', function () {
   acknowledgeButtonPress(3);
   setTimeout(   danceParty,2000)   ;
 });
