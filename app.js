@@ -98,8 +98,9 @@ function inspire(){
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0); }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(255); }
+      timer+=16;
     }
-    timer+=16;
+
   }
   ,16);
 
@@ -119,8 +120,9 @@ function intrigue(){
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(200); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(100); }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(75); }
+      timer+=16;
     }
-    timer+=16;
+
   }
   ,16);
 
@@ -133,17 +135,19 @@ function danceParty(){
   console.log("danceParty function triggered");
   timer = 0;
   timermax = 2000;
-  setInterval( function(){
-    while (timer<timermax){
+  var stopParty = setInterval( function(){
+
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(255); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0); }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(100); }
       timer+=16;
-    }
-
-    console.log("time value is: "+timer);
+      console.log("timer value (danceparty) is: "+timer);
   }
   ,16);
+  if(timer>2000){
+    console.log("since we're done with the dance party, clearInterval on danceParty");
+    clearInterval(stopParty);
+  }
   //play solo 'dance party clip'
   //pick 3 songs from list at random
   //play songs
