@@ -6,7 +6,7 @@ var redPins = [14,17,25];
 var grnPins = [15,27,8];
 var bluPins = [18,22,7];
 //buttons
-var btnPins = [2,3,4];
+var btnPins = [24,3,4];
 
 ///////////////////////Global Variables/////////////////////////////////
 var leds = [];
@@ -32,10 +32,10 @@ btns[0].on('alert', function () {
 console.log("Button 1 Pressed");
 });
 
-// btns[1].on('alert', function () {
-// console.log("Button 2 Pressed");
-// });
-//
-// btns[2].on('alert', function () {
-// console.log("Button 3 Pressed");
-// });
+btns[1].on('alert', function () {
+console.log("Button 2 Pressed");
+});
+
+btns[2].on('alert', function () {
+console.log("Button 3 Pressed");
+});
