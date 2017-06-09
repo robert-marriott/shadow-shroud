@@ -22,18 +22,18 @@ for (var i = 0; i<btnPins.length; i++) {
  var btn = new Gpio(btnPins[i], {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.RISING_EDGE//,
-    // alert: true
+    edge: Gpio.RISING_EDGE,
+    alert: true
   });
  btns.push(btn);
 }
 
-btns[0].on('interrupt', function () {
+btns[0].on('alert', function () {
 console.log("Button 1 Pressed");
 });
-btns[1].on('interrupt', function () {
+btns[1].on('alert', function () {
 console.log("Button 2 Pressed");
 });
-btns[2].on('interrupt', function () {
+btns[2].on('alert', function () {
 console.log("Button 3 Pressed");
 });
