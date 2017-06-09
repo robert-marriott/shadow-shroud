@@ -31,9 +31,11 @@ for (var i = 0; i<btnPins.length; i++) {
 btns[0].on('alert', function () {
 console.log("Button 1 Pressed");
 });
-btns[1].on('alert', function () {
-console.log("Button 2 Pressed");
-});
-btns[2].on('alert', function () {
-console.log("Button 3 Pressed");
-});
+
+// btns[1].on('alert', function () {
+// console.log("Button 2 Pressed");
+// });
+//
+// btns[2].on('alert', function () {
+// console.log("Button 3 Pressed");
+// });
