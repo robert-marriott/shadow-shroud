@@ -8,12 +8,16 @@ console.log("[INFO] Arguements passed to app.js:");
 process.argv.forEach(function (val, index, array) {
   console.log(index + ': ' + val);
 });
+
 ///////////////////////////Libraries////////////////////////////////////
-var Gpio = require('pigpio').Gpio;
+const Gpio = require('pigpio').Gpio;
+const fs = require('fs');
 // var fs = require("fs");
 // var lame = require("lame");
 // var Speaker = require("speaker");
 // var player = require("player");
+// const StreamPlayer = require('streamplayer');
+// var Omx = require('node-omxplayer');
 
 ////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
@@ -160,9 +164,25 @@ function danceParty(){
 setInterval(waitForInput,16); //cycle through wait time indefinitely
 
 ////////////////////////////Button Interrupt checking///////////////////////////
+//check globalState to see if in function or not
 btns[0].on('alert', function () {
-  acknowledgeButtonPress(1);
-  setTimeout(   inspire,2000)      ;
+  switch(globalState) {
+      case 0:
+          globalState=1; //If in wait mode, go to button 1
+          acknowledgeButtonPress(1); //Flash to Acknowledge
+          setTimeout(inspire,2000); //Wait 2s and go into method
+          break;
+      case 1:
+          globalState=0; //If in button 1, return to wait mode 0
+          acknowledgeButtonPress(1);
+          setTimeout(inspire,2000);
+          setInterval(waitForInput,16);
+          break;
+      default:
+          console.log("Fail on button press 1");
+  }
+
+
 });
 btns[1].on('alert', function () {
   acknowledgeButtonPress(2);
