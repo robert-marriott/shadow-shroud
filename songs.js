@@ -4,6 +4,9 @@
 // in the main program with less visual clutter                       //
 // ================================================================== //
 const fs = require('fs');
+const Omx = require('node-omxplayer');
+
+///////////////////////////////File locations///////////////////////////////////
 const buttonFolder = './songs/buttons/';
 const songsFolder = './songs/bank/';
 
@@ -25,9 +28,17 @@ fs.readdir(buttonFolder, (err, files) => {
   });
 });
 
-setTimeout(function(){
-  console.log("Available songs in dance party song bank: ")
-  console.log(songNames);
-  console.log("Available songs in button press prerequisites: ")
-  console.log(mandNames);
-},2000)
+// setTimeout(function(){ //For debug purposes.
+//   console.log("Available songs in dance party song bank: ")
+//   console.log(songNames);
+//   console.log("Available songs in button press prerequisites: ")
+//   console.log(mandNames);
+// },2000)
+
+// var x = 5;
+// var addX = function(value) {
+//   return value + x;
+// };
+/////////////////////////////////////Exports////////////////////////////////////
+module.exports.songNames = songNames;
+module.exports.mandNames = mandNames;

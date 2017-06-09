@@ -1,4 +1,5 @@
 const Gpio = require('pigpio').Gpio;
+const _ = require('lodash');
 ////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
 var ledPins = [14,15,18,   17,27,22,   25,8,7]; //full set
@@ -28,14 +29,14 @@ for (var i = 0; i<btnPins.length; i++) {
  btns.push(btn);
 }
 
-btns[0].on('alert', function () {
+btns[0].on('alert', _.debounce(function () {
 console.log("Button 1 Pressed");
-});
+}),100);
 
-btns[1].on('alert', function () {
+btns[1].on('alert', _.debounce(function () {
 console.log("Button 2 Pressed");
-});
+}),100);
 
-btns[2].on('alert', function () {
+btns[2].on('alert', _.debounce(function () {
 console.log("Button 3 Pressed");
-});
+}),100);
