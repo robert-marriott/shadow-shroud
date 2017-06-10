@@ -207,7 +207,7 @@ btns[1].on('interrupt', _.debounce(function () { //IF BUTTON 2 IS HIT-----------
           acknowledgeButtonPress(2); //Flash to Acknowledge state change
           btns[0].disableInterrupt(); // Stop events emitted from button 2
           btns[2].disableInterrupt(); // Stop events emitted from button 3
-          inspire(); //go to state 1
+          intrigue(); //go to state 1
           break;
       case 2: //IF BUTTON 2 PRESSED IN STATE 2 (Intrigue)
           globalState=0; //If in button 1, return to wait mode 0
@@ -229,7 +229,7 @@ btns[2].on('interrupt', _.debounce(function () { //IF BUTTON 3 IS HIT-----------
           acknowledgeButtonPress(3); //Flash to Acknowledge state change
           btns[0].disableInterrupt(); // Stop events emitted from button 2
           btns[1].disableInterrupt(); // Stop events emitted from button 3
-          inspire(); //go to state 1
+          danceParty(); //go to state 1
           break;
       case 3: //IF BUTTON 3 PRESSED IN STATE 3 (danceParty)
           globalState=0; //If in button 1, return to wait mode 0
