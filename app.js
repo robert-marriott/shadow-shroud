@@ -81,7 +81,7 @@ function waitForInput(){
   for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
   for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
   console.log("Waiting for input");
-  console.log("system state is"+globalState);
+  console.log("system state is "+globalState);
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
@@ -93,6 +93,7 @@ function acknowledgeButtonPress(btn){
   console.log("Button: "+btn+" press acknowledged");
   for(var i = 0; i<leds.length; i++) { leds[i].pwmWrite(255); }
   sleep.sleep(2);
+    console.log("system state is "+globalState);
   //maybe check if I can do 'on' during button press and 'fade away' on falling edge
 
   //button has been pressed so:
@@ -111,6 +112,7 @@ function inspire(){
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0); }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(255); }
+        console.log("system state is "+globalState);
       console.log("Waiting 5sec on blue");
       sleep.sleep(5);
   //     timer+=16;
@@ -135,6 +137,7 @@ function intrigue(){
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(200); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(100); }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(75); }
+        console.log("system state is "+globalState);
       console.log("Waiting 5sec on whatever intriguing color");
       sleep.sleep(5);
   //     timer+=16;
@@ -157,6 +160,7 @@ function danceParty(){
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(255); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0);   }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(100); }
+        console.log("system state is "+globalState);
       console.log("Waiting 5sec on purplish");
       sleep.sleep(5);
   //     timer+=16;
@@ -202,7 +206,7 @@ console.log("global state is currently: "+globalState);
       default:
           console.log("Fail on button press 1");
   }
-}),100);//end switch case for BUTTON 1. Debounced 100ms-------------------------
+}),5000);//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
 btns[1].on('alert', _.throttle(function () { //IF BUTTON 2 IS HIT----------------------
 
@@ -226,7 +230,7 @@ console.log("global state is currently: "+globalState);
       default:
           console.log("Fail on button press 2");
   }
-}),100);//end switch case for BUTTON 2-----------------------------------------------
+}),5000);//end switch case for BUTTON 2-----------------------------------------------
 
 btns[2].on('Alert', _.throttle(function () { //IF BUTTON 3 IS HIT-------------------------
 
@@ -250,4 +254,4 @@ console.log("global state is currently: "+globalState);
       default:
           console.log("Fail on button press 3");
   }
-}),100);//end switch case for BUTTON 3-----------------------------------------------
+}),5000);//end switch case for BUTTON 3-----------------------------------------------
