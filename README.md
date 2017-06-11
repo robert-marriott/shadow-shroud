@@ -38,3 +38,5 @@ something
 ```
 sudo apt-get install omxplayer
 ```
+
+7. Ensure any inputs on I2C GPIO pins are in pullup mode because they have pullup resistors on them by default. 

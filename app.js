@@ -177,22 +177,22 @@ waitForInput(); //cycle through wait time indefinitely
 
 ////////////////////////////Button Interrupt checking///////////////////////////
 //check globalState to see if in function or not
-btns[0].on('interrupt', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
-
+btns[0].on('alert', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
+console.log("button 1 interrupt detected");
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 1 PRESSED IN WAIT MODE
           globalState=1; //If in wait mode, set state to 1 (intro)
           acknowledgeButtonPress(1); //Flash to Acknowledge state change
-          btns[1].disableInterrupt(); // Stop events emitted from button 2
-          btns[2].disableInterrupt(); // Stop events emitted from button 3
+          btns[1].disableAlert(); // Stop events emitted from button 2
+          btns[2].disableAlert(); // Stop events emitted from button 3
           inspire(); //go to state 1
           break;
       case 1: //IF BUTTON 1 PRESSED IN STATE 1 (INTRO)
       console.log("button 1 pressed, global state= "+globalState);
           globalState=0; //If in button 1, return to wait mode 0
           acknowledgeButtonPress(1);
-          btns[1].enableInterrupt(RISING_EDGE); // Start events emitted from button 2
-          btns[2].enableInterrupt(RISING_EDGE); // Start events emitted from button 3
+          btns[1].enableAlert(); // Start events emitted from button 2
+          btns[2].enableAlert(); // Start events emitted from button 3
           waitForInput();
           break;
       default:
@@ -200,21 +200,21 @@ btns[0].on('interrupt', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
   }
 }),100);//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
-btns[1].on('interrupt', _.debounce(function () { //IF BUTTON 2 IS HIT----------------------
+btns[1].on('alert', _.debounce(function () { //IF BUTTON 2 IS HIT----------------------
 
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 2 PRESSED IN WAIT MODE
           globalState=2; //If in wait mode, set state to 1 (intro)
           acknowledgeButtonPress(2); //Flash to Acknowledge state change
-          btns[0].disableInterrupt(); // Stop events emitted from button 2
-          btns[2].disableInterrupt(); // Stop events emitted from button 3
+          btns[0].disableAlert(); // Stop events emitted from button 2
+          btns[2].disableAlert(); // Stop events emitted from button 3
           intrigue(); //go to state 1
           break;
       case 2: //IF BUTTON 2 PRESSED IN STATE 2 (Intrigue)
           globalState=0; //If in button 1, return to wait mode 0
           acknowledgeButtonPress(2);
-          btns[0].enableInterrupt(RISING_EDGE); // Start events emitted from button 2
-          btns[2].enableInterrupt(RISING_EDGE); // Start events emitted from button 3
+          btns[0].enableAlert(); // Start events emitted from button 2
+          btns[2].enableAlert(); // Start events emitted from button 3
           waitForInput();
           break;
       default:
@@ -222,21 +222,21 @@ btns[1].on('interrupt', _.debounce(function () { //IF BUTTON 2 IS HIT-----------
   }
 }),100);//end switch case for BUTTON 2-----------------------------------------------
 
-btns[2].on('interrupt', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
+btns[2].on('Alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
 
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 3 PRESSED IN WAIT MODE
           globalState=3; //If in wait mode, set state to 1 (intro)
           acknowledgeButtonPress(3); //Flash to Acknowledge state change
-          btns[0].disableInterrupt(); // Stop events emitted from button 2
-          btns[1].disableInterrupt(); // Stop events emitted from button 3
+          btns[0].disableAlert(); // Stop events emitted from button 2
+          btns[1].disableAlert(); // Stop events emitted from button 3
           danceParty(); //go to state 1
           break;
       case 3: //IF BUTTON 3 PRESSED IN STATE 3 (danceParty)
           globalState=0; //If in button 1, return to wait mode 0
           acknowledgeButtonPress(3);
-          btns[0].enableInterrupt(RISING_EDGE); // Start events emitted from button 2
-          btns[1].enableInterrupt(RISING_EDGE); // Start events emitted from button 3
+          btns[0].enableAlert(); // Start events emitted from button 2
+          btns[1].enableAlert(); // Start events emitted from button 3
           waitForInput();
           break;
       default:
