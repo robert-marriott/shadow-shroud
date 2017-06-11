@@ -206,7 +206,7 @@ console.log("global state is currently: "+globalState);
       default:
           console.log("Fail on button press 1");
   }
-}),5000);//end switch case for BUTTON 1. Debounced 100ms-------------------------
+},200));//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
 btns[1].on('alert', _.throttle(function () { //IF BUTTON 2 IS HIT----------------------
 
@@ -230,7 +230,7 @@ console.log("global state is currently: "+globalState);
       default:
           console.log("Fail on button press 2");
   }
-}),5000);//end switch case for BUTTON 2-----------------------------------------------
+},200));;//end switch case for BUTTON 2-----------------------------------------------
 
 btns[2].on('Alert', _.throttle(function () { //IF BUTTON 3 IS HIT-------------------------
 
@@ -254,4 +254,4 @@ console.log("global state is currently: "+globalState);
       default:
           console.log("Fail on button press 3");
   }
-}),5000);//end switch case for BUTTON 3-----------------------------------------------
+},200));;//end switch case for BUTTON 3-----------------------------------------------
