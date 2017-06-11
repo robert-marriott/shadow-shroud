@@ -188,6 +188,7 @@ btns[0].on('interrupt', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
           inspire(); //go to state 1
           break;
       case 1: //IF BUTTON 1 PRESSED IN STATE 1 (INTRO)
+      console.log("button 1 pressed, global state= "+globalState);
           globalState=0; //If in button 1, return to wait mode 0
           acknowledgeButtonPress(1);
           btns[1].enableInterrupt(); // Start events emitted from button 2
