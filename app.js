@@ -80,6 +80,8 @@ function waitForInput(){
   for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
   for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
   for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
+  console.log("Waiting for input");
+  console.log("system state is"+globalState);
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
@@ -177,8 +179,10 @@ waitForInput(); //cycle through wait time indefinitely
 
 ////////////////////////////Button Interrupt checking///////////////////////////
 //check globalState to see if in function or not
-btns[0].on('alert', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
+btns[0].on('alert', _.throttle(function () { //IF BUTTON 1 IS HIT-----------
+
 console.log("button 1 interrupt detected");
+console.log("global state is currently: "+globalState);
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 1 PRESSED IN WAIT MODE
           globalState=1; //If in wait mode, set state to 1 (intro)
@@ -200,8 +204,10 @@ console.log("button 1 interrupt detected");
   }
 }),100);//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
-btns[1].on('alert', _.debounce(function () { //IF BUTTON 2 IS HIT----------------------
+btns[1].on('alert', _.throttle(function () { //IF BUTTON 2 IS HIT----------------------
 
+console.log("button 2 interrupt detected");
+console.log("global state is currently: "+globalState);
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 2 PRESSED IN WAIT MODE
           globalState=2; //If in wait mode, set state to 1 (intro)
@@ -222,8 +228,10 @@ btns[1].on('alert', _.debounce(function () { //IF BUTTON 2 IS HIT---------------
   }
 }),100);//end switch case for BUTTON 2-----------------------------------------------
 
-btns[2].on('Alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
+btns[2].on('Alert', _.throttle(function () { //IF BUTTON 3 IS HIT-------------------------
 
+console.log("button 2 interrupt detected");
+console.log("global state is currently: "+globalState);
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 3 PRESSED IN WAIT MODE
           globalState=3; //If in wait mode, set state to 1 (intro)
