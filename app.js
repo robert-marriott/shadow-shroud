@@ -183,7 +183,7 @@ waitForInput(); //cycle through wait time indefinitely
 
 ////////////////////////////Button Interrupt checking///////////////////////////
 //check globalState to see if in function or not
-btns[0].on('alert', _.throttle(function () { //IF BUTTON 1 IS HIT-----------
+btns[0].on('alert', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
 
 console.log("button 1 interrupt detected");
 console.log("global state is currently: "+globalState);
@@ -208,7 +208,7 @@ console.log("global state is currently: "+globalState);
   }
 },200));//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
-btns[1].on('alert', _.throttle(function () { //IF BUTTON 2 IS HIT----------------------
+btns[1].on('alert', _.debounce(function () { //IF BUTTON 2 IS HIT----------------------
 
 console.log("button 2 interrupt detected");
 console.log("global state is currently: "+globalState);
@@ -232,7 +232,7 @@ console.log("global state is currently: "+globalState);
   }
 },200));;//end switch case for BUTTON 2-----------------------------------------------
 
-btns[2].on('Alert', _.throttle(function () { //IF BUTTON 3 IS HIT-------------------------
+btns[2].on('Alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
 
 console.log("button 2 interrupt detected");
 console.log("global state is currently: "+globalState);
