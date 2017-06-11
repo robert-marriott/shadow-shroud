@@ -191,8 +191,8 @@ btns[0].on('interrupt', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
       console.log("button 1 pressed, global state= "+globalState);
           globalState=0; //If in button 1, return to wait mode 0
           acknowledgeButtonPress(1);
-          btns[1].enableInterrupt(); // Start events emitted from button 2
-          btns[2].enableInterrupt(); // Start events emitted from button 3
+          btns[1].enableInterrupt(RISING_EDGE); // Start events emitted from button 2
+          btns[2].enableInterrupt(RISING_EDGE); // Start events emitted from button 3
           waitForInput();
           break;
       default:
@@ -213,8 +213,8 @@ btns[1].on('interrupt', _.debounce(function () { //IF BUTTON 2 IS HIT-----------
       case 2: //IF BUTTON 2 PRESSED IN STATE 2 (Intrigue)
           globalState=0; //If in button 1, return to wait mode 0
           acknowledgeButtonPress(2);
-          btns[0].enableInterrupt(); // Start events emitted from button 2
-          btns[2].enableInterrupt(); // Start events emitted from button 3
+          btns[0].enableInterrupt(RISING_EDGE); // Start events emitted from button 2
+          btns[2].enableInterrupt(RISING_EDGE); // Start events emitted from button 3
           waitForInput();
           break;
       default:
@@ -235,8 +235,8 @@ btns[2].on('interrupt', _.debounce(function () { //IF BUTTON 3 IS HIT-----------
       case 3: //IF BUTTON 3 PRESSED IN STATE 3 (danceParty)
           globalState=0; //If in button 1, return to wait mode 0
           acknowledgeButtonPress(3);
-          btns[0].enableInterrupt(); // Start events emitted from button 2
-          btns[1].enableInterrupt(); // Start events emitted from button 3
+          btns[0].enableInterrupt(RISING_EDGE); // Start events emitted from button 2
+          btns[1].enableInterrupt(RISING_EDGE); // Start events emitted from button 3
           waitForInput();
           break;
       default:
