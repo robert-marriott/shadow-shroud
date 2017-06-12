@@ -32,8 +32,8 @@ var orange = new Colour(100,40,0); //orange
 var white = new Colour(100,100,100);
 var black = new Colour(0,0,0);
 
-while(true){
-  console.log("test color loop running");
+// while(true){
+//   console.log("test color loop running");
 
 // Start by setting to green.
 channel1.setRgb(medBlue, function() {
@@ -74,4 +74,4 @@ channel3.setRgb(aqua, function() {
   });
 });
 
-}
+// }
