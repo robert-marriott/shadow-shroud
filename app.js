@@ -119,7 +119,7 @@ function acknowledgeButtonPress(btn){
     //Bright white, then fade to black before proceeding to next function.
     for(var j = 0; j<acknowledgeArray.length;j++){
       for(var i = 0; i<leds.length; i++){
-        leds[i].pwmWrite(antilogLookupR[j]);
+        leds[i].pwmWrite(acknowledgeArray[j]);
       } //end led pwm writing loop
       sleep.msleep(20)
     } //end acknowledgeArray loop
