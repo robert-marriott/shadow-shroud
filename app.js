@@ -31,9 +31,9 @@ var channel1Pins = [14,15,18];
 var channel2Pins = [17,27,22];
 var channel3Pins = [25,8,7];
 
-// var redPins = [14,17,25];
-// var grnPins = [15,27,8];
-// var bluPins = [18,22,7];
+var redPins = [14,17,25];
+var grnPins = [15,27,8];
+var bluPins = [18,22,7];
 //buttons
 var btnPins = [2,3,4];
 
@@ -41,9 +41,9 @@ var btnPins = [2,3,4];
 var leds = [];
 var btns = [];
 // Empty arrays to hold gpio objects
-// var reds = [];
-// var grns = [];
-// var blus = [];
+var reds = [];
+var grns = [];
+var blus = [];
 
 var channel1 = [];
 var channel2 = [];
@@ -63,9 +63,9 @@ for (var i = 0; i<ledPins.length; i++) {
  leds.push(led);
 }
 // LED channels sorted into R G and B
-// for (var i = 0; i<redPins.length; i++) { var led = new Gpio(redPins[i], {mode: Gpio.OUTPUT}); reds.push(led) }
-// for (var i = 0; i<grnPins.length; i++) { var led = new Gpio(grnPins[i], {mode: Gpio.OUTPUT}); grns.push(led) }
-// for (var i = 0; i<bluPins.length; i++) { var led = new Gpio(bluPins[i], {mode: Gpio.OUTPUT}); blus.push(led) }
+for (var i = 0; i<redPins.length; i++) { var led = new Gpio(redPins[i], {mode: Gpio.OUTPUT}); reds.push(led) }
+for (var i = 0; i<grnPins.length; i++) { var led = new Gpio(grnPins[i], {mode: Gpio.OUTPUT}); grns.push(led) }
+for (var i = 0; i<bluPins.length; i++) { var led = new Gpio(bluPins[i], {mode: Gpio.OUTPUT}); blus.push(led) }
 
 for (var i = 0; i<channel1Pins.length; i++) { var led = new Gpio(channel1Pins[i], {mode: Gpio.OUTPUT}); channel1.push(led) }
 for (var i = 0; i<channel2Pins.length; i++) { var led = new Gpio(channel2Pins[i], {mode: Gpio.OUTPUT}); channel2.push(led) }
@@ -116,7 +116,7 @@ function acknowledgeButtonPress(btn){
   console.log("\n------------acknowledgeButtonPress function triggered-----------");
   console.log("In acknowledgebuttonpress function. [globalState] is "+globalState);
   console.log("Button: "+btn+" press acknowledged");
-    //Bright white, then fade to black before proceeding to next function. 
+    //Bright white, then fade to black before proceeding to next function.
     for(var j = 0; j<acknowledgeArray.length;j++){
       for(var i = 0; i<leds.length; i++){
         leds[i].pwmWrite(antilogLookupR[j]);
