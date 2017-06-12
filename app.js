@@ -26,9 +26,14 @@ const sleep = require('sleep'); //debugging
 ////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
 var ledPins = [14,15,18,   17,27,22,   25,8,7]; //full set
-var redPins = [14,17,25];
-var grnPins = [15,27,8];
-var bluPins = [18,22,7];
+
+var channel1Pins = [14,15,18];
+var channel2Pins = [17,27,22];
+var channel3Pins = [25,8,7];
+
+// var redPins = [14,17,25];
+// var grnPins = [15,27,8];
+// var bluPins = [18,22,7];
 //buttons
 var btnPins = [2,3,4];
 
@@ -36,9 +41,13 @@ var btnPins = [2,3,4];
 var leds = [];
 var btns = [];
 // Empty arrays to hold gpio objects
-var reds = [];
-var grns = [];
-var blus = [];
+// var reds = [];
+// var grns = [];
+// var blus = [];
+
+var channel1 = [];
+var channel2 = [];
+var channel3 = [];
 
 var globalState = 0;
 
@@ -49,9 +58,15 @@ for (var i = 0; i<ledPins.length; i++) {
  leds.push(led);
 }
 // LED channels sorted into R G and B
-for (var i = 0; i<redPins.length; i++) { var led = new Gpio(redPins[i], {mode: Gpio.OUTPUT}); reds.push(led) }
-for (var i = 0; i<grnPins.length; i++) { var led = new Gpio(grnPins[i], {mode: Gpio.OUTPUT}); grns.push(led) }
-for (var i = 0; i<bluPins.length; i++) { var led = new Gpio(bluPins[i], {mode: Gpio.OUTPUT}); blus.push(led) }
+// for (var i = 0; i<redPins.length; i++) { var led = new Gpio(redPins[i], {mode: Gpio.OUTPUT}); reds.push(led) }
+// for (var i = 0; i<grnPins.length; i++) { var led = new Gpio(grnPins[i], {mode: Gpio.OUTPUT}); grns.push(led) }
+// for (var i = 0; i<bluPins.length; i++) { var led = new Gpio(bluPins[i], {mode: Gpio.OUTPUT}); blus.push(led) }
+
+for (var i = 0; i<channel1Pins.length; i++) { var led = new Gpio(channel1Pins[i], {mode: Gpio.OUTPUT}); channel1.push(led) }
+for (var i = 0; i<channel2Pins.length; i++) { var led = new Gpio(channel2Pins[i], {mode: Gpio.OUTPUT}); channel2.push(led) }
+for (var i = 0; i<channel3Pins.length; i++) { var led = new Gpio(channel3Pins[i], {mode: Gpio.OUTPUT}); channel3.push(led) }
+
+
 //Input pins for 3 large red arcade buttons. Buttons changed to pullup because I2C bus has 1.8k pullups on
 //by default. being experimented on 6/10
 for (var i = 0; i<btnPins.length; i++) {
@@ -97,15 +112,7 @@ function acknowledgeButtonPress(btn){
   console.log("In acknowledgebuttonpress function. [globalState] is "+globalState);
   console.log("Button: "+btn+" press acknowledged");
 
-  for(var i = 0; i<leds.length; i++) { leds[i].pwmWrite(255); }
-  sleep.sleep(1);
 
-  //maybe check if I can do 'on' during button press and 'fade away' on falling edge
-
-  //button has been pressed so:
-  //briefly (1s bright, 3 sec fade)
-    //turn all led's white
-    //fade out to black
 }
 
 function inspire(){
