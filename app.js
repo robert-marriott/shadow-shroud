@@ -80,11 +80,11 @@ function waitForInput(){
   console.log("\n---------------waitForInput function triggered-----------------");
   console.log("In waitForInput function. [globalState] is "+globalState);
   console.log("Waiting for input...");
-
+while(true){
   for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
   for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
   for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
-
+}
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
@@ -244,7 +244,6 @@ btns[2].on('Alert', _.debounce(function () { //IF BUTTON 3 IS HIT---------------
   console.log("button 3 interrupt detected");
   console.log("--------------Switch function for Button 3-----------------");
   console.log("[globalState] state is currently: "+globalState);
-
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 3 PRESSED IN WAIT MODE
           globalState=3; //If in wait mode, set state to 1 (intro)
