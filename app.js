@@ -51,6 +51,11 @@ var channel3 = [];
 
 var globalState = 0;
 
+//logarithmic lookup tables for linear brightness response LED fading.
+var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
+                        255,255,255,255,255,235,216,197,196,180,163,
+                        148,134,120,108,96,86,76,67,58,51,44,38,35,
+                        32,27,22,18,15,12,9,7,5,4,3,2,1,0,0];
 ///////////////////////////initialize///////////////////////////////////
 //All output LED pins as one array.
 for (var i = 0; i<ledPins.length; i++) {
@@ -111,8 +116,13 @@ function acknowledgeButtonPress(btn){
   console.log("\n------------acknowledgeButtonPress function triggered-----------");
   console.log("In acknowledgebuttonpress function. [globalState] is "+globalState);
   console.log("Button: "+btn+" press acknowledged");
-
-
+    //Bright white, then fade to black before proceeding to next function. 
+    for(var j = 0; j<acknowledgeArray.length;j++){
+      for(var i = 0; i<leds.length; i++){
+        leds[i].pwmWrite(antilogLookupR[j]);
+      } //end led pwm writing loop
+      sleep.msleep(20)
+    } //end acknowledgeArray loop
 }
 
 function inspire(){
