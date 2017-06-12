@@ -6,6 +6,7 @@ Electronics to control the shadow shroud art piece
 * https://www.npmjs.com/package/pigpio -> use and manipulation of GPIO pins on RPi 2011 1.1
 * https://www.npmjs.com/package/node-omxplayer -> create mp3 objects to play on native player.
 * https://www.npmjs.com/package/lodash -> lodash has a software debounce function
+* https://www.npmjs.com/package/rpi-rgb -> used to fade colors easily
 
 ## Information and examples
 * https://learn.adafruit.com/node-embedded-development/events
@@ -39,4 +40,4 @@ something
 sudo apt-get install omxplayer
 ```
 
-7. Ensure any inputs on I2C GPIO pins are in pullup mode because they have pullup resistors on them by default. 
+7. Ensure any inputs on I2C GPIO pins are in pullup mode because they have pullup resistors on them by default.

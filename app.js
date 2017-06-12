@@ -77,14 +77,14 @@ for (var i = 0; i<btnPins.length; i++) {
 ///////////////////////////////////Main Methods/////////////////////////////////
 //setInterval(waitForInput, 16); //run every 16ms
 function waitForInput(){
-  console.log("\n---------------waitForInput function triggered-----------------");
-  console.log("In waitForInput function. [globalState] is "+globalState);
-  console.log("Waiting for input...");
-while(true){
+  // console.log("\n---------------waitForInput function triggered-----------------");
+  // console.log("In waitForInput function. [globalState] is "+globalState);
+  // console.log("Waiting for input...");
+
   for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
   for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
   for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
-}
+console.log("colors written to gpio");
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
@@ -98,7 +98,7 @@ function acknowledgeButtonPress(btn){
   console.log("Button: "+btn+" press acknowledged");
 
   for(var i = 0; i<leds.length; i++) { leds[i].pwmWrite(255); }
-  sleep.sleep(2);
+  sleep.sleep(1);
 
   //maybe check if I can do 'on' during button press and 'fade away' on falling edge
 
@@ -188,7 +188,7 @@ function danceParty(){
   //return to wait state
 }
 
-waitForInput(); //cycle through wait time indefinitely
+setInterval(waitForInput(),50); //cycle through wait time indefinitely
 
 ////////////////////////////Button Interrupt checking///////////////////////////
 //check globalState to see if in function or not
@@ -209,7 +209,7 @@ console.log("[globalState] state is currently: "+globalState);
           acknowledgeButtonPress(1);
           btns[1].enableAlert(); // Start events emitted from button 2
           btns[2].enableAlert(); // Start events emitted from button 3
-          waitForInput();
+          setInterval(waitForInput(),50);
           break;
       default:
           console.log("Fail on button press 1");
