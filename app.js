@@ -77,11 +77,14 @@ for (var i = 0; i<btnPins.length; i++) {
 ///////////////////////////////////Main Methods/////////////////////////////////
 //setInterval(waitForInput, 16); //run every 16ms
 function waitForInput(){
+  console.log("\n---------------waitForInput function triggered-----------------");
+  console.log("In waitForInput function. [globalState] is "+globalState);
+  console.log("Waiting for input...");
+
   for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
   for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
   for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
-  console.log("Waiting for input");
-  console.log("system state is "+globalState);
+
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
@@ -90,10 +93,13 @@ function waitForInput(){
 }
 
 function acknowledgeButtonPress(btn){
+  console.log("\n------------acknowledgeButtonPress function triggered-----------");
+  console.log("In acknowledgebuttonpress function. [globalState] is "+globalState);
   console.log("Button: "+btn+" press acknowledged");
+
   for(var i = 0; i<leds.length; i++) { leds[i].pwmWrite(255); }
   sleep.sleep(2);
-    console.log("system state is "+globalState);
+
   //maybe check if I can do 'on' during button press and 'fade away' on falling edge
 
   //button has been pressed so:
@@ -103,7 +109,8 @@ function acknowledgeButtonPress(btn){
 }
 
 function inspire(){
-  console.log("Inspire function triggered");
+  console.log("\n-------------------Inspire function triggered-----------------");
+  console.log("In inspire function (state 1). [globalState] is "+globalState);
   //
   // timer = 0;
   // timermax = 2000;
@@ -112,7 +119,7 @@ function inspire(){
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0); }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(255); }
-        console.log("system state is "+globalState);
+
       console.log("Waiting 5sec on blue");
       sleep.sleep(5);
   //     timer+=16;
@@ -128,7 +135,9 @@ function inspire(){
 }
 
 function intrigue(){
-  console.log("intrigue function triggered");
+  console.log("\n-----------------intrigue function triggered------------------");
+  console.log("In intrigue function (state 2). [globalState] is "+globalState);
+
   //
   // timer = 0;
   // timermax = 2000;
@@ -137,7 +146,6 @@ function intrigue(){
       for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(200); }
       for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(100); }
       for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(75); }
-        console.log("system state is "+globalState);
       console.log("Waiting 5sec on whatever intriguing color");
       sleep.sleep(5);
   //     timer+=16;
@@ -152,7 +160,8 @@ function intrigue(){
 }
 
 function danceParty(){
-  console.log("danceParty function triggered");
+  console.log("\n---------------danceParty function triggered------------------");
+  console.log("In danceParty function (state 3). [globalState] is "+globalState);
   // timer = 0;
   // timermax = 2000;
   // var stopParty = setInterval( function(){
@@ -184,9 +193,9 @@ waitForInput(); //cycle through wait time indefinitely
 ////////////////////////////Button Interrupt checking///////////////////////////
 //check globalState to see if in function or not
 btns[0].on('alert', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
-
-console.log("button 1 interrupt detected");
-console.log("global state is currently: "+globalState);
+console.log("\nbutton 1 interrupt detected");
+console.log("--------------Switch function for Button 1-----------------");
+console.log("[globalState] state is currently: "+globalState);
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 1 PRESSED IN WAIT MODE
           globalState=1; //If in wait mode, set state to 1 (intro)
@@ -196,7 +205,6 @@ console.log("global state is currently: "+globalState);
           inspire(); //go to state 1
           break;
       case 1: //IF BUTTON 1 PRESSED IN STATE 1 (INTRO)
-      console.log("button 1 pressed, global state= "+globalState);
           globalState=0; //If in button 1, return to wait mode 0
           acknowledgeButtonPress(1);
           btns[1].enableAlert(); // Start events emitted from button 2
@@ -209,9 +217,9 @@ console.log("global state is currently: "+globalState);
 },200));//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
 btns[1].on('alert', _.debounce(function () { //IF BUTTON 2 IS HIT----------------------
-
-console.log("button 2 interrupt detected");
-console.log("global state is currently: "+globalState);
+  console.log("\nbutton 2 interrupt detected");
+  console.log("--------------Switch function for Button 2-----------------");
+  console.log("[globalState] state is currently: "+globalState);
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 2 PRESSED IN WAIT MODE
           globalState=2; //If in wait mode, set state to 1 (intro)
@@ -233,9 +241,10 @@ console.log("global state is currently: "+globalState);
 },200));;//end switch case for BUTTON 2-----------------------------------------------
 
 btns[2].on('Alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
+  console.log("button 3 interrupt detected");
+  console.log("--------------Switch function for Button 3-----------------");
+  console.log("[globalState] state is currently: "+globalState);
 
-console.log("button 2 interrupt detected");
-console.log("global state is currently: "+globalState);
   switch(globalState) { //start switch case
       case 0: //IF BUTTON 3 PRESSED IN WAIT MODE
           globalState=3; //If in wait mode, set state to 1 (intro)
