@@ -188,7 +188,7 @@ function danceParty(){
   //return to wait state
 }
 
-setInterval(waitForInput(),50); //cycle through wait time indefinitely
+setInterval(waitForInput,50); //cycle through wait time indefinitely
 
 ////////////////////////////Button Interrupt checking///////////////////////////
 //check globalState to see if in function or not
@@ -209,7 +209,7 @@ console.log("[globalState] state is currently: "+globalState);
           acknowledgeButtonPress(1);
           btns[1].enableAlert(); // Start events emitted from button 2
           btns[2].enableAlert(); // Start events emitted from button 3
-          setInterval(waitForInput(),50);
+          setInterval(waitForInput,50);
           break;
       default:
           console.log("Fail on button press 1");
