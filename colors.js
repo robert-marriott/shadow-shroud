@@ -35,23 +35,128 @@ var orange = new Colour(100,40,0); //orange
 var white = new Colour(100,100,100);
 var black = new Colour(0,0,0);
 
+
+function randomInt(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+
 // while(true){
 //   console.log("test color loop running");
 var wait = function(){ //Loop this on waitForInput. Cool fading with some purple.
   channel1.fadeRgb(medBlue, 2000, function() {
     channel1.fadeRgb(blue, 2000, function() {
       channel1.fadeRgb(aqua, 2000, function() {
-        channel1.fadeRgb(medBlue, 2000); }); }); });
+        channel1.fadeRgb(yellow, 2000); }); }); });
 
   channel2.fadeRgb(green, 2000,function() {
     channel2.fadeRgb(aqua, 2000, function() {
       channel2.fadeRgb(purple, 2000, function() {
-        channel2.fadeRgb(green, 2000); }); }); });
+        channel2.fadeRgb(blue, 2000); }); }); });
 
-  channel3.fadeRgb(aqua, 2000,function() {
+  channel3.fadeRgb(yellow, 2000,function() {
     channel3.fadeRgb(purple, 2000, function() {
       channel3.fadeRgb(green, 2000, function() {
         channel3.fadeRgb(aqua, 2000); }); }); });
 }
 
+var inspire1 = function(){
+//40 seconds slowwww cool colors.
+channel1.fadeRgb(softRed, 2000, function() {
+  channel1.fadeRgb(blue, 2000, function() {
+    channel1.fadeRgb(aqua, 2000, function() {
+      channel1.fadeRgb(yellow, 2000); }); }); });
+
+channel2.fadeRgb(green, 2000,function() {
+  channel2.fadeRgb(aqua, 2000, function() {
+    channel2.fadeRgb(purple, 2000, function() {
+      channel2.fadeRgb(blue, 2000); }); }); });
+
+channel3.fadeRgb(yellow, 2000,function() {
+  channel3.fadeRgb(purple, 2000, function() {
+    channel3.fadeRgb(softRed, 2000, function() {
+      channel3.fadeRgb(aqua, 2000); }); }); });
+}
+
+var inspire2 = function(){
+// 120 seconds speedier, cool slightly warmer
+channel1.fadeRgb(medRed, 2000, function() {
+  channel1.fadeRgb(blue, 2000, function() {
+    channel1.fadeRgb(orange, 2000, function() {
+      channel1.fadeRgb(yellow, 2000); }); }); });
+
+channel2.fadeRgb(orange, 2000,function() {
+  channel2.fadeRgb(aqua, 2000, function() {
+    channel2.fadeRgb(purple, 2000, function() {
+      channel2.fadeRgb(blue, 2000); }); }); });
+
+channel3.fadeRgb(yellow, 2000,function() {
+  channel3.fadeRgb(purple, 2000, function() {
+    channel3.fadeRgb(medRed, 2000, function() {
+      channel3.fadeRgb(aqua, 2000); }); }); });
+}
+
+var inspire3 = function(){
+//44 seconds fast, add in some warm
+channel1.fadeRgb(red, 2000, function() {
+  channel1.fadeRgb(blue, 2000, function() {
+    channel1.fadeRgb(aqua, 2000, function() {
+      channel1.fadeRgb(yellow, 2000); }); }); });
+
+channel2.fadeRgb(purple, 2000,function() {
+  channel2.fadeRgb(orange, 2000, function() {
+    channel2.fadeRgb(blue, 2000, function() {
+      channel2.fadeRgb(aqua, 2000); }); }); });
+
+channel3.fadeRgb(orange, 2000,function() {
+  channel3.fadeRgb(purple, 2000, function() {
+    channel3.fadeRgb(red, 2000, function() {
+      channel3.fadeRgb(aqua, 2000); }); }); });
+}
+
+var intrigue = function() {
+  //state 2, fast LED's of all colors.
+  //generate a few random colors to sprinkle into dance coloring.
+  var rand1 = new Colour(randomInt(0,100),randomInt(0,100),randomInt(0,100));
+  var rand2 = new Colour(randomInt(0,100),randomInt(0,100),randomInt(0,100));
+  var rand3 = new Colour(randomInt(0,100),randomInt(0,100),randomInt(0,100));
+
+  channel1.strobeRgb(rand1, 300, 2000, function() {
+    channel1.fadeRgb(blue, 1000,        function() {
+      channel1.fadeRgb(rand3, 1000,       function() {
+        channel1.fadeRgb(yellow, 1000),     function() {
+          channel1.fadeRgb(rand2, 1000,       function() {
+            channel1.strobeRgb(green, 300, 2000); }); }); }); }); });
+
+  channel2.fadeRgb(rand2, 1000,         function() {
+    channel2.strobeRgb(orange, 300, 2000, function() {
+      channel2.strobeRgb(rand1, 300, 2000, function() {
+        channel2.fadeRgb(aqua, 1000),       function() {
+          channel2.fadeRgb(rand3, 1000,       function() {
+            channel2.fadeRgb(red, 1000); }); }); }); }); });
+
+  channel3.fadeRgb(rand3, 1000,         function() {
+    channel3.strobeRgb(yellow, 300, 2000, function() {
+      channel3.fadeRgb(rand1, 1000,         function() {
+        channel2.fadeRgb(purple, 1000),       function() {
+          channel2.strobeRgb(rand3, 300, 2000,  function() {
+            channel3.fadeRgb(aqua, 1000); }); }); }); }); });
+
+}
+
+var danceParty = function() {
+  //state 3, dance party. honestly this can probably just be a repeat of intrigue.
+}
+
+
+
+
+
+
 module.exports.wait = wait;
+module.exports.inspire1 = inspire1;
+module.exports.inspire2 = inspire2;
+module.exports.inspire3 = inspire3;
+module.exports.intrigue = intrigue;
+module.exports.danceParty = danceParty;

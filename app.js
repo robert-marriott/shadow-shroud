@@ -13,7 +13,6 @@ process.argv.forEach(function (val, index, array) {
 const Gpio = require('pigpio').Gpio;
 const _ = require('lodash');
 const sleep = require('sleep'); //debugging
-// var fs = require("fs");
 // var lame = require("lame");
 // var Speaker = require("speaker");
 // var player = require("player");
@@ -21,35 +20,30 @@ const sleep = require('sleep'); //debugging
 // var Omx = require('node-omxplayer');
 
 var colors = require("./colors.js");
-// var songs = require("./songs.js"); //songs.js creates song objects and lists
-// songs.songNames[0]= "whatever that is"
+var songs = require("./songs.js"); //songs.js creates song objects and lists
 
 ////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
-var ledPins = [14,15,18,   17,27,22,   25,8,7]; //full set
-
+var ledPins = [14,15,18,   17,27,22,   25,8,7]; //full set. BCM values.
 var channel1Pins = [14,15,18];
 var channel2Pins = [17,27,22];
 var channel3Pins = [25,8,7];
-
-var redPins = [14,17,25];
-var grnPins = [15,27,8];
-var bluPins = [18,22,7];
 //buttons
 var btnPins = [2,3,4];
-
 ///////////////////////Global Variables/////////////////////////////////
 var leds = [];
 var btns = [];
 // Empty arrays to hold gpio objects
-var reds = [];
-var grns = [];
-var blus = [];
-
 var channel1 = [];
 var channel2 = [];
 var channel3 = [];
 
+//Timers
+var globalTimer = Date.now();
+var currentTime = 0;
+var previousTime = 0;
+var loopTime = 0;
+//Global State
 var globalState = 0;
 
 //logarithmic lookup tables for linear brightness response LED fading.
@@ -64,10 +58,6 @@ for (var i = 0; i<ledPins.length; i++) {
  leds.push(led);
 }
 // LED channels sorted into R G and B
-for (var i = 0; i<redPins.length; i++) { var led = new Gpio(redPins[i], {mode: Gpio.OUTPUT}); reds.push(led) }
-for (var i = 0; i<grnPins.length; i++) { var led = new Gpio(grnPins[i], {mode: Gpio.OUTPUT}); grns.push(led) }
-for (var i = 0; i<bluPins.length; i++) { var led = new Gpio(bluPins[i], {mode: Gpio.OUTPUT}); blus.push(led) }
-
 for (var i = 0; i<channel1Pins.length; i++) { var led = new Gpio(channel1Pins[i], {mode: Gpio.OUTPUT}); channel1.push(led) }
 for (var i = 0; i<channel2Pins.length; i++) { var led = new Gpio(channel2Pins[i], {mode: Gpio.OUTPUT}); channel2.push(led) }
 for (var i = 0; i<channel3Pins.length; i++) { var led = new Gpio(channel3Pins[i], {mode: Gpio.OUTPUT}); channel3.push(led) }
@@ -102,11 +92,8 @@ function waitForInput(){
   console.log("In waitForInput function. [globalState] is "+globalState);
   console.log("Waiting for input...");
 
-  // for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
-  // for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
-  // for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
   setInterval(colors.wait,8000);
-console.log("colors written to gpio");
+  console.log("colors written to gpio");
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
@@ -130,49 +117,52 @@ function acknowledgeButtonPress(btn){
 function inspire(){
   console.log("\n-------------------Inspire function triggered-----------------");
   console.log("In inspire function (state 1). [globalState] is "+globalState);
-  //
-  // timer = 0;
-  // timermax = 2000;
-  // setInterval( function(){
-  //   while (timer<timermax){
-      for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
-      for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0); }
-      for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(255); }
+  loopTime = Date.now(); //function starts, begin timer.
 
-      console.log("Waiting 5sec on blue");
-      sleep.sleep(5);
-  //     timer+=16;
-  //   }
-  //
-  // }
-  // ,16);
+  var uninispire = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
+    currentTime = Date.now();
+    if (currentTime - loopTime<40000){ //first part of the song, inspire1
+        console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire1");
+        colors.inspire1();
+    } else if (currentTime-loopTime>=40000 || currentTime - loopTime) < 160000){
+        console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire2");
+        colors.inspire2();
+    } else if (currentTime-loopTime>=160000 || currentTime - loopTime) < 205000){
+        console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire3");
+        colors.inspire3();
+    } else {
+        console.log("loop run time is: ["+currentTime-loopTime+"] Clear interval");
+        globalState = 0; //loop ran its course, set state to wait for switch case. .
+        clearInterval(uninispire);
+    }
+
+  },8000);
 
   //play intro MP3
   //play inspirational MP3
   //change led's to cool/slow as it is going
   //return to wait state
-  globalState = 0;
 }
 
 function intrigue(){
   console.log("\n-----------------intrigue function triggered------------------");
   console.log("In intrigue function (state 2). [globalState] is "+globalState);
+  var singleSongLength = 10000;
+  loopTime = Date.now(); //function starts, begin timer.
 
-  //
-  // timer = 0;
-  // timermax = 2000;
-  // setInterval( function(){
-  //   while (timer<timermax){
-      for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(200); }
-      for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(100); }
-      for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(75); }
-      console.log("Waiting 5sec on whatever intriguing color");
-      sleep.sleep(5);
-  //     timer+=16;
-  //   }
-  //
-  // }
-  // ,16);
+  var unintrigue = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
+
+      currentTime = Date.now();
+      if (currentTime - loopTime < singleSongLength){ //this will be the length of a random song.
+          console.log("loop run time is: ["+currentTime-loopTime+"] and running intrigue");
+          colors.intrigue();
+       } else{
+         console.log("loop run time is: ["+currentTime-loopTime+"] Clear interval");
+         globalState = 0; //loop ran its course, set state to wait for switch case. .
+         clearInterval(unintrigue);
+       }
+
+     },8000);
 
   //play solo 'intrigue show me what you got'
   //play one song
@@ -182,24 +172,24 @@ function intrigue(){
 function danceParty(){
   console.log("\n---------------danceParty function triggered------------------");
   console.log("In danceParty function (state 3). [globalState] is "+globalState);
-  // timer = 0;
-  // timermax = 2000;
-  // var stopParty = setInterval( function(){
 
-      for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(255); }
-      for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(0);   }
-      for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(100); }
-        console.log("system state is "+globalState);
-      console.log("Waiting 5sec on purplish");
-      sleep.sleep(5);
-  //     timer+=16;
-  //     console.log("timer value (danceparty) is: "+timer);
-  // }
-  // ,16);
-  // if(timer>2000){
-  //   console.log("since we're done with the dance party, clearInterval on danceParty");
-  //   clearInterval(stopParty);
-  // }
+  var singleSongLength = 30000;
+  loopTime = Date.now(); //function starts, begin timer.
+
+  var undance = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
+
+      currentTime = Date.now();
+      if (currentTime - loopTime < singleSongLength){ //this will be the length of a random song.
+          console.log("loop run time is: ["+currentTime-loopTime+"] and running intrigue");
+          colors.intrigue();
+       } else{
+         console.log("loop run time is: ["+currentTime-loopTime+"] Clear interval");
+         globalState = 0; //loop ran its course, set state to wait for switch case. .
+         clearInterval(undance);
+       }
+
+     },8000);
+
   //play solo 'dance party clip'
   //pick 3 songs from list at random
   //play songs
