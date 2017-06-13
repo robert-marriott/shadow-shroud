@@ -39,10 +39,11 @@ var channel2 = [];
 var channel3 = [];
 
 //Timers
-var globalTimer = Date.now();
-var currentTime = 0;
-var previousTime = 0;
-var loopTime = 0;
+var intrigueTimer = 0;
+var inspireTimer = 0;
+var partyTimer = 0;
+var waitTimer = 0;
+
 //Global State
 var globalState = 0;
 
@@ -118,9 +119,9 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   function inspire(){
     console.log("\n-------------------Inspire function triggered-----------------");
     console.log("In inspire function (state 1). [globalState] is "+globalState);
-    loopTime = Date.now(); //function starts, begin timer.
+    var loopTime = Date.now(); //function starts, begin timer.
 
-    var uninispire = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
+    inspireTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
 
@@ -136,7 +137,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       } else {
         console.log("loop run time is: ["+testTime+"] Clear interval");
         globalState = 0; //loop ran its course, set state to wait for switch case. .
-        clearInterval(uninispire);
+        clearInterval(inspireTimer);
         btns[1].enableAlert(); // Start events emitted from button 2
         btns[2].enableAlert(); // Start events emitted from button 3
         waitForInput();
@@ -154,9 +155,9 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     console.log("\n-----------------intrigue function triggered------------------");
     console.log("In intrigue function (state 2). [globalState] is "+globalState);
     var singleSongLength = 300000;
-    loopTime = Date.now(); //function starts, begin timer.
+    var loopTime = Date.now(); //function starts, begin timer.
 
-    var unintrigue = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
+    intrigueTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
       if (testTime < singleSongLength){ //this will be the length of a random song.
@@ -165,7 +166,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       } else{
         console.log("loop run time is: ["+testTime+"] State completed. Clear interval");
         globalState = 0; //loop ran its course, set state to wait for switch case. .
-        clearInterval(unintrigue);
+        clearInterval(intrigueTimer);
         btns[0].enableAlert(); // Start events emitted from button 2
         btns[2].enableAlert(); // Start events emitted from button 3
         waitForInput();
@@ -183,9 +184,9 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     console.log("In danceParty function (state 3). [globalState] is "+globalState);
 
     var singleSongLength = 30000;
-    loopTime = Date.now(); //function starts, begin timer.
+    var loopTime = Date.now(); //function starts, begin timer.
 
-    var undance = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
+    partyTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
       if (testTime < singleSongLength){ //this will be the length of a random song.
@@ -194,7 +195,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       } else{
         console.log("loop run time is: ["+testTime+"] Clear interval");
         globalState = 0; //loop ran its course, set state to wait for switch case. .
-        clearInterval(undance);
+        clearInterval(partyTimer);
         btns[0].enableAlert(); // Start events emitted from button 2
         btns[1].enableAlert(); // Start events emitted from button 3
         waitForInput();
@@ -202,13 +203,20 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     },8000);
   }
 
+function clearAllTimers(){
+  clearInterval(inspireTimer);
+  clearInterval(intrigueTimer);
+  clearInterval(partyTimer);
+  clearInterval(waitTimer);
+}
+
   waitForInput();
   ////////////////////////////Button Interrupt checking///////////////////////////
-  //check globalState to see if in function or not
   btns[0].on('alert', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
     console.log("\nbutton 1 interrupt detected");
     console.log("--------------Switch function for Button 1-----------------");
     console.log("[globalState] state is currently: "+globalState);
+    clearAllTimers(); //stop execution of whatever state LEDs
     switch(globalState) { //start switch case
       case 0: //IF BUTTON 1 PRESSED IN WAIT MODE
         globalState=1; //If in wait mode, set state to 1 (intro)
@@ -227,12 +235,13 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       default:
       console.log("Fail on button press 1");
     }
-  },200));//end switch case for BUTTON 1. Debounced 100ms-------------------------
+  },100));//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
   btns[1].on('alert', _.debounce(function () { //IF BUTTON 2 IS HIT----------------------
     console.log("\nbutton 2 interrupt detected");
     console.log("--------------Switch function for Button 2-----------------");
     console.log("[globalState] state is currently: "+globalState);
+    clearAllTimers(); //stop execution of whatever state LEDs
     switch(globalState) { //start switch case
       case 0: //IF BUTTON 2 PRESSED IN WAIT MODE
         globalState=2; //If in wait mode, set state to 1 (intro)
@@ -251,12 +260,13 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       default:
       console.log("Fail on button press 2");
     }
-  },200));;//end switch case for BUTTON 2-----------------------------------------------
+  },100));;//end switch case for BUTTON 2-----------------------------------------------
 
   btns[2].on('Alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
     console.log("button 3 interrupt detected");
     console.log("--------------Switch function for Button 3-----------------");
     console.log("[globalState] state is currently: "+globalState);
+    clearAllTimers(); //stop execution of whatever state LEDs
     switch(globalState) { //start switch case
       case 0: //IF BUTTON 3 PRESSED IN WAIT MODE
         globalState=3; //If in wait mode, set state to 1 (intro)
@@ -275,4 +285,4 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       default:
       console.log("Fail on button press 3");
     }
-  },200));;//end switch case for BUTTON 3-----------------------------------------------
+  },100));;//end switch case for BUTTON 3-----------------------------------------------
