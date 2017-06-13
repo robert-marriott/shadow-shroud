@@ -93,7 +93,7 @@ function waitForInput(){
   console.log("Waiting for input...");
 
   setInterval(colors.wait,8000);
-  console.log("colors written to gpio");
+  console.log("colors written to gpio"+Date.now());
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
     //pulse green to blue with some purple
@@ -124,10 +124,10 @@ function inspire(){
     if (currentTime - loopTime<40000){ //first part of the song, inspire1
         console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire1");
         colors.inspire1();
-    } else if (currentTime-loopTime>=40000 || currentTime - loopTime) < 160000){
+    } else if (currentTime-loopTime>=40000 || currentTime - loopTime < 160000){
         console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire2");
         colors.inspire2();
-    } else if (currentTime-loopTime>=160000 || currentTime - loopTime) < 205000){
+    } else if (currentTime-loopTime>=160000 || currentTime - loopTime < 205000){
         console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire3");
         colors.inspire3();
     } else {
