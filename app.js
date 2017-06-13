@@ -49,20 +49,15 @@ var globalState = 0;
 
 //logarithmic lookup tables for linear brightness response LED fading.
 var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
-  255,255,255,255,255,235,216,197,196,180,163,
-  148,134,120,108,96,86,76,67,58,51,44,38,35,
-  32,27,22,18,15,12,9,7,5,4,3,2,1,0,0];
+                        255,255,255,255,255,235,216,197,196,180,163,
+                        148,134,120,108,96,86,76,67,58,51,44,38,35,
+                        32,27,22,18,15,12,9,7,5,4,3,2,1,0,0];
   ///////////////////////////initialize///////////////////////////////////
   //All output LED pins as one array.
   for (var i = 0; i<ledPins.length; i++) {
     var led = new Gpio(ledPins[i], {mode: Gpio.OUTPUT});
     leds.push(led);
   }
-  // LED channels sorted into R G and B
-  // for (var i = 0; i<channel1Pins.length; i++) { var led = new Gpio(channel1Pins[i], {mode: Gpio.OUTPUT}); channel1.push(led) }
-  // for (var i = 0; i<channel2Pins.length; i++) { var led = new Gpio(channel2Pins[i], {mode: Gpio.OUTPUT}); channel2.push(led) }
-  // for (var i = 0; i<channel3Pins.length; i++) { var led = new Gpio(channel3Pins[i], {mode: Gpio.OUTPUT}); channel3.push(led) }
-
 
   //Input pins for 3 large red arcade buttons. Buttons changed to pullup because I2C bus has 1.8k pullups on
   //by default. being experimented on 6/10
@@ -84,16 +79,18 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   btns.push(btn3);
 
   ////////////////////////////////////////////////////////////////////////////////
-  // There are going to be 5ish states.
-  // State 1: Wait => Lights fade green blue, maybe purple. "Cool/Slow"
-  // State 2: Button 1 => Inspire. Lights fade through a few cooler to warmer colors
-  // State 3: Button 2 => Intrigue. Fast paced, warm colors. One song.
-  // State 4: Button 3 => Party! Fast paced, strobing, 3 songs.
-  // State 5: Acknowledge => pulse of bright white light that fades on button press
+  // There are going to be 5 states.
+  // State 0: Wait     => Lights fade green blue, maybe purple. "Cool/Slow"
+  // State 1: Button 1 => Inspire. Lights fade through a few cooler to warmer colors
+  // State 2: Button 2 => Intrigue. Fast paced, warm colors. One song.
+  // State 3: Button 3 => Party! Fast paced, strobing, 3 songs.
+  // State 4: Acknowledge => pulse of bright white light that fades on button press
   ////////////////////////////////////////////////////////////////////////////////
 
-  ///////////////////////////////////Main Methods/////////////////////////////////
-  //setInterval(waitForInput, 16); //run every 16ms
+  ///////////////////////////////////Main Methods////////////////////////////////
+  //---------------------------------------------------------------------------//
+  //                           State 0: waitForInput                           //
+  //---------------------------------------------------------------------------//
   function waitForInput(){
     console.log("\n---------------waitForInput function triggered-----------------");
     console.log("In waitForInput function. [globalState] is "+globalState);
@@ -109,20 +106,9 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     },8000);
 
   }
-
-  function acknowledgeButtonPress(btn){
-    console.log("\n------------acknowledgeButtonPress function triggered-----------");
-    console.log("In acknowledgebuttonpress function. [globalState] is "+globalState);
-    console.log("Button: "+btn+" press acknowledged");
-    //Bright white, then fade to black before proceeding to next function.
-    for(var j = 0; j<acknowledgeArray.length;j++){
-      for(var i = 0; i<leds.length; i++){
-        leds[i].pwmWrite(acknowledgeArray[j]);
-      } //end led pwm writing loop
-      sleep.msleep(20)
-    } //end acknowledgeArray loop
-  }
-
+  //---------------------------------------------------------------------------//
+  //                           State 1: intrigue                               //
+  //---------------------------------------------------------------------------//
   function inspire(){
     console.log("\n-------------------Inspire function triggered-----------------");
     console.log("In inspire function (state 1). [globalState] is "+globalState);
@@ -147,17 +133,15 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
         clearInterval(inspireTimer);
         btns[1].enableAlert(); // Start events emitted from button 2
         btns[2].enableAlert(); // Start events emitted from button 3
+        acknowledgeButtonPress(-1);
         waitForInput();
       }
-
     },8000);
-
-    //play intro MP3
-    //play inspirational MP3
-    //change led's to cool/slow as it is going
-    //return to wait state
   }
 
+  //---------------------------------------------------------------------------//
+  //                          State 2: intrigue                                //
+  //---------------------------------------------------------------------------//
   function intrigue(){
     console.log("\n-----------------intrigue function triggered------------------");
     console.log("In intrigue function (state 2). [globalState] is "+globalState);
@@ -176,6 +160,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
         clearInterval(intrigueTimer);
         btns[0].enableAlert(); // Start events emitted from button 2
         btns[2].enableAlert(); // Start events emitted from button 3
+        acknowledgeButtonPress(-1);
         waitForInput();
       }
 
@@ -185,7 +170,9 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     //play one song
     //return to wait state
   }
-
+  //---------------------------------------------------------------------------//
+  //                            State 3: danceParty                            //
+  //---------------------------------------------------------------------------//
   function danceParty(){
     console.log("\n---------------danceParty function triggered------------------");
     console.log("In danceParty function (state 3). [globalState] is "+globalState);
@@ -205,20 +192,46 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
         clearInterval(partyTimer);
         btns[0].enableAlert(); // Start events emitted from button 2
         btns[1].enableAlert(); // Start events emitted from button 3
+        acknowledgeButtonPress(-1);
         waitForInput();
       }
     },8000);
   }
 
-function clearAllTimers(){
+  //---------------------------------------------------------------------------//
+  //                    State 4: acknowledgeButtonPress                        //
+  //---------------------------------------------------------------------------//
+  function acknowledgeButtonPress(btn){
+    console.log("\n------------acknowledgeButtonPress function triggered-----------");
+    console.log("In acknowledgebuttonpress function. [globalState] is "+globalState);
+    console.log("Button: "+btn+" press acknowledged");
+    //Bright white, then fade to black before proceeding to next function.
+    for(var j = 0; j<acknowledgeArray.length;j++){
+      for(var i = 0; i<leds.length; i++){
+        leds[i].pwmWrite(acknowledgeArray[j]);
+      } //end led pwm writing loop
+      sleep.msleep(20)
+    } //end acknowledgeArray loop
+  }
+
+//////////////////////////////Supporting Methods////////////////////////////////
+function clearAllTimers(){ //Clears all setInterval timers on state transition
   clearInterval(inspireTimer);
   clearInterval(intrigueTimer);
   clearInterval(partyTimer);
   clearInterval(waitTimer);
 }
 
+function blackenLEDs(){ //Turns LED's to black between transitions
+  for(var i = 0; i<leds.length; i++){
+    leds[i].pwmWrite(0);
+  } //end led pwm writing loop
+}
+
   waitForInput();
-  ////////////////////////////Button Interrupt checking///////////////////////////
+  //---------------------------------------------------------------------------//
+  //                        Button Interrupt handlers                          //
+  //---------------------------------------------------------------------------//
   btns[0].on('alert', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
     console.log("\nbutton 1 interrupt detected");
     console.log("--------------Switch function for Button 1-----------------");
