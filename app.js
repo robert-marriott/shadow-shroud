@@ -124,17 +124,19 @@ function inspire(){
     currentTime = Date.now();
     console.log("current time: "+currentTime);
     console.log("loopTime: "+loopTime);
-    if (currentTime - loopTime<40000){ //first part of the song, inspire1
-        console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire1");
+    var testTime = currentTime - loopTime;
+
+    if (testTime<40000){ //first part of the song, inspire1
+        console.log("loop run time is: ["+testTime+"] and running inspire1");
         colors.inspire1();
-    } else if (currentTime-loopTime>=40000 || currentTime - loopTime < 160000){
-        console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire2");
+    } else if (testTime>=40000 || testTime < 160000){
+        console.log("loop run time is: ["+testTime+"] and running inspire2");
         colors.inspire2();
-    } else if (currentTime-loopTime>=160000 || currentTime - loopTime < 205000){
-        console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire3");
+    } else if (testTime>=160000 || testTime < 205000){
+        console.log("loop run time is: ["+testTime+"] and running inspire3");
         colors.inspire3();
     } else {
-        console.log("loop run time is: ["+currentTime-loopTime+"] Clear interval");
+        console.log("loop run time is: ["+testTime+"] Clear interval");
         globalState = 0; //loop ran its course, set state to wait for switch case. .
         clearInterval(uninispire);
     }
