@@ -101,7 +101,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
 
     var loopTime = Date.now(); //function starts, begin timer.
 
-    setInterval(function(){
+    waitTimer = setInterval(function(){
       var currentTime = Date.now();
       var testTime = currentTime - loopTime;
       console.log("loop run time is: ["+testTime+"] and running waitForInput");
@@ -242,7 +242,7 @@ function clearAllTimers(){
       default:
       console.log("Fail on button press 1");
     }
-  },100));//end switch case for BUTTON 1. Debounced 100ms-------------------------
+  },200));//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
   btns[1].on('alert', _.debounce(function () { //IF BUTTON 2 IS HIT----------------------
     console.log("\nbutton 2 interrupt detected");
@@ -267,7 +267,7 @@ function clearAllTimers(){
       default:
       console.log("Fail on button press 2");
     }
-  },100));;//end switch case for BUTTON 2-----------------------------------------------
+  },200));;//end switch case for BUTTON 2-----------------------------------------------
 
   btns[2].on('Alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
     console.log("button 3 interrupt detected");
@@ -292,4 +292,4 @@ function clearAllTimers(){
       default:
       console.log("Fail on button press 3");
     }
-  },100));;//end switch case for BUTTON 3-----------------------------------------------
+  },200));;//end switch case for BUTTON 3-----------------------------------------------
