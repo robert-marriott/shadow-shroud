@@ -20,6 +20,7 @@ const sleep = require('sleep'); //debugging
 // const StreamPlayer = require('streamplayer');
 // var Omx = require('node-omxplayer');
 
+var colors = require("./colors.js");
 // var songs = require("./songs.js"); //songs.js creates song objects and lists
 // songs.songNames[0]= "whatever that is"
 
@@ -101,9 +102,10 @@ function waitForInput(){
   // console.log("In waitForInput function. [globalState] is "+globalState);
   // console.log("Waiting for input...");
 
-  for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
-  for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
-  for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
+  // for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
+  // for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
+  // for(var i = 0; i<blus.length; i++) { blus[i].pwmWrite(0); }
+  setInterval(colors.wait,8000);
 console.log("colors written to gpio");
   //this whole function might be on setInterval. running repteadly waiting.
   //when button state is nothing/0
@@ -149,6 +151,7 @@ function inspire(){
   //play inspirational MP3
   //change led's to cool/slow as it is going
   //return to wait state
+  globalState = 0;
 }
 
 function intrigue(){

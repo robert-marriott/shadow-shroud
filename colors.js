@@ -4,6 +4,9 @@
 // Available through module.exports to the main app.js                //
 // ================================================================== //
 
+//note for later, make all the color schemes in here and import with
+// exports later. cleaner in the loops.
+
 var RgbChannel = require('rpi-rgb').Channel;
 var Colour = require('rpi-rgb').Colour;
 
@@ -34,44 +37,21 @@ var black = new Colour(0,0,0);
 
 // while(true){
 //   console.log("test color loop running");
+var wait = function(){ //Loop this on waitForInput. Cool fading with some purple.
+  channel1.fadeRgb(medBlue, 2000, function() {
+    channel1.fadeRgb(blue, 2000, function() {
+      channel1.fadeRgb(aqua, 2000, function() {
+        channel1.fadeRgb(medBlue, 2000); }); }); });
 
-// Start by setting to green.
-channel1.setRgb(medBlue, function() {
-  // Fade to blue
-  channel1.fadeRgb(blue, 2000, function() {
-    // Fade to aqua
-    channel1.fadeRgb(aqua, 2000, function() {
-      // Return to green
-      channel1.fadeRgb(medBlue, 2000, function() {
-      });
-    });
-  });
-});
+  channel2.fadeRgb(green, 2000,function() {
+    channel2.fadeRgb(aqua, 2000, function() {
+      channel2.fadeRgb(purple, 2000, function() {
+        channel2.fadeRgb(green, 2000); }); }); });
 
-// Start by setting to green.
-channel2.setRgb(green, function() {
-  // Fade to aqua
-  channel2.fadeRgb(aqua, 2000, function() {
-    // Fade to Purple
-    channel2.fadeRgb(purple, 2000, function() {
-      // Return to green
-      channel2.fadeRgb(green, 2000, function() {
-      });
-    });
-  });
-});
+  channel3.fadeRgb(aqua, 2000,function() {
+    channel3.fadeRgb(purple, 2000, function() {
+      channel3.fadeRgb(green, 2000, function() {
+        channel3.fadeRgb(aqua, 2000); }); }); });
+}
 
-// Start by setting to green.
-channel3.setRgb(aqua, function() {
-  // Fade to aqua
-  channel3.fadeRgb(purple, 2000, function() {
-    // Fade to Purple
-    channel3.fadeRgb(green, 2000, function() {
-      // Return to green
-      channel3.fadeRgb(aqua, 2000, function() {
-      });
-    });
-  });
-});
-
-// }
+module.exports.wait = wait;
