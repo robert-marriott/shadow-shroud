@@ -125,21 +125,21 @@ var intrigue = function() {
   channel1.strobeRgb(rand1, 300, 2000, function() {
     channel1.fadeRgb(blue, 1000,        function() {
       channel1.fadeRgb(rand3, 1000,       function() {
-        channel1.fadeRgb(yellow, 1000),     function() {
+        channel1.fadeRgb(yellow, 1000,     function() {
           channel1.fadeRgb(rand2, 1000,       function() {
             channel1.strobeRgb(green, 300, 2000); }); }); }); }); });
 
   channel2.fadeRgb(rand2, 1000,         function() {
     channel2.strobeRgb(orange, 300, 2000, function() {
       channel2.strobeRgb(rand1, 300, 2000, function() {
-        channel2.fadeRgb(aqua, 1000),       function() {
+        channel2.fadeRgb(aqua, 1000,        function() {
           channel2.fadeRgb(rand3, 1000,       function() {
             channel2.fadeRgb(red, 1000); }); }); }); }); });
 
   channel3.fadeRgb(rand3, 1000,         function() {
     channel3.strobeRgb(yellow, 300, 2000, function() {
       channel3.fadeRgb(rand1, 1000,         function() {
-        channel2.fadeRgb(purple, 1000),       function() {
+        channel2.fadeRgb(purple, 1000,       function() {
           channel2.strobeRgb(rand3, 300, 2000,  function() {
             channel3.fadeRgb(aqua, 1000); }); }); }); }); });
 
