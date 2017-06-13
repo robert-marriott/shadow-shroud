@@ -58,14 +58,14 @@ for (var i = 0; i<ledPins.length; i++) {
  leds.push(led);
 }
 // LED channels sorted into R G and B
-for (var i = 0; i<channel1Pins.length; i++) { var led = new Gpio(channel1Pins[i], {mode: Gpio.OUTPUT}); channel1.push(led) }
-for (var i = 0; i<channel2Pins.length; i++) { var led = new Gpio(channel2Pins[i], {mode: Gpio.OUTPUT}); channel2.push(led) }
-for (var i = 0; i<channel3Pins.length; i++) { var led = new Gpio(channel3Pins[i], {mode: Gpio.OUTPUT}); channel3.push(led) }
+// for (var i = 0; i<channel1Pins.length; i++) { var led = new Gpio(channel1Pins[i], {mode: Gpio.OUTPUT}); channel1.push(led) }
+// for (var i = 0; i<channel2Pins.length; i++) { var led = new Gpio(channel2Pins[i], {mode: Gpio.OUTPUT}); channel2.push(led) }
+// for (var i = 0; i<channel3Pins.length; i++) { var led = new Gpio(channel3Pins[i], {mode: Gpio.OUTPUT}); channel3.push(led) }
 
 
 //Input pins for 3 large red arcade buttons. Buttons changed to pullup because I2C bus has 1.8k pullups on
 //by default. being experimented on 6/10
-for (var i = 0; i<btnPins.length; i++) {
+for (var i = 0; i<btnPins.length-1; i++) {
  var btn = new Gpio(btnPins[i], {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_UP,
@@ -74,7 +74,13 @@ for (var i = 0; i<btnPins.length; i++) {
   });
  btns.push(btn);
 }
-
+var btn3 = new Gpio(btnPins[2], {
+    mode: Gpio.INPUT,
+    pullUpDown: Gpio.PUD_DOWN,
+    edge: Gpio.RISING_EDGE,
+    alert: true
+});
+btns.push(btn3);
 
 ////////////////////////////////////////////////////////////////////////////////
 // There are going to be 5ish states.
@@ -94,11 +100,6 @@ function waitForInput(){
 
   setInterval(colors.wait,8000);
   console.log("colors written to gpio"+Date.now());
-  //this whole function might be on setInterval. running repteadly waiting.
-  //when button state is nothing/0
-    //pulse green to blue with some purple
-  //When button press/interrupt detected
-    //set global button state variable
 }
 
 function acknowledgeButtonPress(btn){
@@ -121,6 +122,8 @@ function inspire(){
 
   var uninispire = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
     currentTime = Date.now();
+    console.log("current time: "+currentTime);
+    console.log("loopTime: "+loopTime);
     if (currentTime - loopTime<40000){ //first part of the song, inspire1
         console.log("loop run time is: ["+currentTime-loopTime+"] and running inspire1");
         colors.inspire1();
