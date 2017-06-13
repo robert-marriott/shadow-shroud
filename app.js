@@ -99,8 +99,15 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     console.log("In waitForInput function. [globalState] is "+globalState);
     console.log("Waiting for input...");
 
-    setInterval(colors.wait,8000);
-    console.log("colors written to gpio"+Date.now());
+    var loopTime = Date.now(); //function starts, begin timer.
+
+    setInterval(function(){
+      var currentTime = Date.now();
+      var testTime = currentTime - loopTime;
+      console.log("loop run time is: ["+testTime+"] and running waitForInput");
+      colors.wait();
+    },8000);
+
   }
 
   function acknowledgeButtonPress(btn){
@@ -122,7 +129,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     var loopTime = Date.now(); //function starts, begin timer.
 
     inspireTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
-      currentTime = Date.now();
+      var currentTime = Date.now();
       var testTime = currentTime - loopTime;
 
       if (testTime<40000){ //first part of the song, inspire1
@@ -154,7 +161,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   function intrigue(){
     console.log("\n-----------------intrigue function triggered------------------");
     console.log("In intrigue function (state 2). [globalState] is "+globalState);
-    var singleSongLength = 300000;
+    var singleSongLength = 30000;
     var loopTime = Date.now(); //function starts, begin timer.
 
     intrigueTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.

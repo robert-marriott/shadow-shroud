@@ -54,9 +54,9 @@ var wait = function(){ //Loop this on waitForInput. Cool fading with some purple
       channel2.fadeRgb(purple, 2500, function() {
         channel2.fadeRgb(blue, 3000); }); }); });
 
-  channel3.fadeRgb(purple, 3000,function() {
+  channel3.fadeRgb(purple, 2000,function() {
     channel3.fadeRgb(green, 2000, function() {
-      channel3.fadeRgb(blue, 1000, function() {
+      channel3.fadeRgb(blue, 2000, function() {
         channel3.fadeRgb(aqua, 2000); }); }); });
 }
 ///////////////////////////////////////////////////////////////////////////////
