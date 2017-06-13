@@ -42,25 +42,24 @@ function randomInt(min,max)
 }
 
 
-// while(true){
-//   console.log("test color loop running");
+///////////////////////////////////////////////////////////////////////////////
 var wait = function(){ //Loop this on waitForInput. Cool fading with some purple.
   channel1.fadeRgb(medBlue, 500, function() {
     channel1.fadeRgb(blue, 2000, function() {
       channel1.fadeRgb(aqua, 2500, function() {
         channel1.fadeRgb(yellow, 3000); }); }); });
 
-  channel2.fadeRgb(green, 1000,function() {
+  channel2.fadeRgb(softGreen, 1000,function() {
     channel2.fadeRgb(aqua, 1500, function() {
       channel2.fadeRgb(purple, 2500, function() {
         channel2.fadeRgb(blue, 3000); }); }); });
 
-  channel3.fadeRgb(yellow, 3000,function() {
-    channel3.fadeRgb(purple, 2000, function() {
-      channel3.fadeRgb(green, 1000, function() {
+  channel3.fadeRgb(purple, 3000,function() {
+    channel3.fadeRgb(green, 2000, function() {
+      channel3.fadeRgb(blue, 1000, function() {
         channel3.fadeRgb(aqua, 2000); }); }); });
 }
-
+///////////////////////////////////////////////////////////////////////////////
 var inspire1 = function(){
 //40 seconds slowwww cool colors.
 channel1.fadeRgb(softRed, 1000, function() {
@@ -78,7 +77,7 @@ channel3.fadeRgb(yellow, 1000,function() {
     channel3.fadeRgb(softRed, 2500, function() {
       channel3.fadeRgb(aqua, 2000); }); }); });
 }
-
+///////////////////////////////////////////////////////////////////////////////
 var inspire2 = function(){
 // 120 seconds speedier, cool slightly warmer
 channel1.fadeRgb(medRed, 2000, function() {
@@ -96,7 +95,7 @@ channel3.fadeRgb(yellow, 2000,function() {
     channel3.fadeRgb(medRed, 2000, function() {
       channel3.fadeRgb(aqua, 2000); }); }); });
 }
-
+///////////////////////////////////////////////////////////////////////////////
 var inspire3 = function(){
 //44 seconds fast, add in some warm
 channel1.fadeRgb(red, 2000, function() {
@@ -114,7 +113,7 @@ channel3.fadeRgb(orange, 2000,function() {
     channel3.fadeRgb(red, 2000, function() {
       channel3.fadeRgb(aqua, 2000); }); }); });
 }
-
+///////////////////////////////////////////////////////////////////////////////
 var intrigue = function() {
   //state 2, fast LED's of all colors.
   //generate a few random colors to sprinkle into dance coloring.
@@ -144,7 +143,7 @@ var intrigue = function() {
             channel3.fadeRgb(aqua, 500); }); }); }); }); });
 
 }
-
+///////////////////////////////////////////////////////////////////////////////
 var danceParty = function() {
   //state 3, dance party. honestly this can probably just be a repeat of intrigue.
 }
