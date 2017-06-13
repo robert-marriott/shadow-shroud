@@ -98,9 +98,9 @@ for (var i = 0; i<btnPins.length; i++) {
 ///////////////////////////////////Main Methods/////////////////////////////////
 //setInterval(waitForInput, 16); //run every 16ms
 function waitForInput(){
-  // console.log("\n---------------waitForInput function triggered-----------------");
-  // console.log("In waitForInput function. [globalState] is "+globalState);
-  // console.log("Waiting for input...");
+  console.log("\n---------------waitForInput function triggered-----------------");
+  console.log("In waitForInput function. [globalState] is "+globalState);
+  console.log("Waiting for input...");
 
   // for(var i = 0; i<reds.length; i++) { reds[i].pwmWrite(0); }
   // for(var i = 0; i<grns.length; i++) { grns[i].pwmWrite(255); }
@@ -208,8 +208,9 @@ function danceParty(){
   //return to wait state
 }
 
-setInterval(waitForInput,50); //cycle through wait time indefinitely
+//setInterval(waitForInput,50); //cycle through wait time indefinitely
 
+waitForInput();
 ////////////////////////////Button Interrupt checking///////////////////////////
 //check globalState to see if in function or not
 btns[0].on('alert', _.debounce(function () { //IF BUTTON 1 IS HIT-----------
@@ -229,7 +230,8 @@ console.log("[globalState] state is currently: "+globalState);
           acknowledgeButtonPress(1);
           btns[1].enableAlert(); // Start events emitted from button 2
           btns[2].enableAlert(); // Start events emitted from button 3
-          setInterval(waitForInput,50);
+          // setInterval(waitForInput,50);
+          waitForInput();
           break;
       default:
           console.log("Fail on button press 1");
