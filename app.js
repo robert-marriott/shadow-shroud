@@ -20,7 +20,7 @@ const sleep = require('sleep'); //debugging
 // var Omx = require('node-omxplayer');
 
 var colors = require("./colors.js");
-var songs = require("./songs.js"); //songs.js creates song objects and lists
+// var songs = require("./songs.js"); //songs.js creates song objects and lists
 
 ////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
