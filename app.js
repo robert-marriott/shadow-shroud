@@ -170,15 +170,12 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   function danceParty(){
     console.log("\n---------------danceParty function triggered------------------");
     console.log("In danceParty function (state 3). [globalState] is "+globalState);
-
-    var singleSongLength = 30000;
     var loopTime = Date.now(); //function starts, begin timer.
-
     partyTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
       if(testTime<songs.totalSongDuration()+10000){ //check omxplayer status. if playingm, continue loop.
-        console.log("loop run time is: ["+testTime+"] and running intrigue");
+        console.log("loop run time is: ["+testTime+"] and running danceParty");
         colors.intrigue();
       } else{
           songs.stopSongs();
