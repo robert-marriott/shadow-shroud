@@ -4,41 +4,95 @@
 // in the main program with less visual clutter                       //
 // ================================================================== //
 const fs = require('fs');
-const Omx = require('node-omxplayer');
+// const omx = require('node-omx');
+var omx = require('omxdirector');
 
 ///////////////////////////////File locations///////////////////////////////////
-const buttonFolder = './songs/buttons/';
-const songsFolder = './songs/bank/';
+const state1Folder = './songs/state1/';
+const state2Folder = './songs/state2/';
+const state3Folder = './songs/state3/';
 
-var songNames = [];
-var mandNames = [];
-
-//Import song bank for use in the main program's danceParty state
-fs.readdir(songsFolder, (err, files) => {
+var state1names = [];
+var state2names = [];
+var state3names = [];
+///////////////////////// Populate arrays of songs ////////////////////////
+fs.readdir(state1Folder, (err, files) => {
   files.forEach(file => {
-    var song = file;
-    songNames.push(song);
+    state1names.push(file);
   });
 });
-
-//Import functional button sounds for use in the main program
-fs.readdir(buttonFolder, (err, files) => {
+fs.readdir(state2Folder, (err, files) => {
   files.forEach(file => {
-    mandNames.push(file);
+    state2names.push(file);
   });
 });
-
+fs.readdir(state3Folder, (err, files) => {
+  files.forEach(file => {
+    state3names.push(file);
+  });
+});
+//////////////////////////////////////////////////////////////////////////
 // setTimeout(function(){ //For debug purposes.
 //   console.log("Available songs in dance party song bank: ")
-//   console.log(songNames);
+//   console.log(state3names);
 //   console.log("Available songs in button press prerequisites: ")
-//   console.log(mandNames);
-// },2000)
+//   console.log(state2names);
+// },2000);
+//////////////////////////////////////////////////////////////////////////
+//Picks random songs from a bank and stores them in an array as strings.
+var pickRandom = function(songCount){
+  var requestedSongs = [];
+  for(var i = 0;i<songCount;i++){
+      var song = state3names[randomInt(0,state3names.length-1)];
+      requestedSongs.push(song);
+      if(i==songCount-1){
+        return requestedSongs;
+      }
+  }
+}
 
-// var x = 5;
-// var addX = function(value) {
-//   return value + x;
-// };
+function randomInt(min,max){ return Math.floor(Math.random()*(max-min+1)+min); }
+//////////////////////////////////////////////////////////////////////////
+//Initialize OMX objects for player.
+var playSongs = function(state,numSongs){
+  if(state==1){ //play only inspire song
+    omx.setVideoDir('/home/pi/shadow-shroud/songs/state1/');
+    omx.play('state1.mp3', {audioOutput: 'local'});
+  }
+  else if(state==2){ //play intro, 1 song, outro.
+    var queue = ['/state2/state2start.mp3',pickRandom(1).toString(),'/state2/state2start.mp3'];
+    omx.setVideoDir('/home/pi/shadow-shroud/songs/');
+    omx.play(queue, {audioOutput: 'local'});
+  }
+  else if(state==3){
+    var queue = pickRandom(numSongs);
+    omx.setVideoDir('/home/pi/shadow-shroud/songs/state3/');
+    omx.play(queue, {audioOutput: 'local'});
+  }
+  else{
+    console.log("playSongs has failed! Panic!");
+  }
+}
+
+var getStatus = function(){
+  return omx.getStatus().playing;
+}
 /////////////////////////////////////Exports////////////////////////////////////
-module.exports.songNames = songNames;
-module.exports.mandNames = mandNames;
+module.exports.state1names = state1names;
+module.exports.state2names = state2names;
+module.exports.state3names = state3names;
+module.exports.pickRandom = pickRandom;
+module.exports.playSongs = playSongs;
+module.exports.getStatus = getStatus;
+module.exports.omx = omx;
+
+// setTimeout(function(){
+//   console.log("Three random songs:");
+//   console.log(pickRandom(5));
+// },1000);
+
+setTimeout(function(){
+  console.log("Three random songs:");
+  playSongs(3,3);
+
+},1000);

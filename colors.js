@@ -4,8 +4,7 @@
 // Available through module.exports to the main app.js                //
 // ================================================================== //
 
-//note for later, make all the color schemes in here and import with
-// exports later. cleaner in the loops.
+// Library: https://www.npmjs.com/package/rpi-rgb
 
 var RgbChannel = require('rpi-rgb').Channel;
 var Colour = require('rpi-rgb').Colour;
@@ -14,6 +13,7 @@ var Colour = require('rpi-rgb').Colour;
 var channel1 = new RgbChannel(15,16,1); //BCM 14,15,18
 var channel2 = new RgbChannel(0,2,3); //BCM 17,27,22
 var channel3 = new RgbChannel(6,10,11);   //BCM 25,8,7
+// var buttonChannel = new RgbChannel(x,y,z) //faux channel to set button LED's
 
 // Colors lots of colors. in intensity values 0-100
 var softRed = new Colour(10,0,0); //RED
@@ -42,6 +42,17 @@ function randomInt(min,max)
 }
 
 
+///////////////////////////////////////////////////////////////////////////////
+
+var acknowledge = function(){
+ channel1.setRgb(white);
+ channel2.setRgb(white);
+ channel3.setRgb(white);
+
+ channel1.fadeRgb(black,1000);
+ channel2.fadeRgb(black,1000);
+ channel3.fadeRgb(black,1000);
+}
 ///////////////////////////////////////////////////////////////////////////////
 var wait = function(){ //Loop this on waitForInput. Cool fading with some purple.
   channel1.fadeRgb(medBlue, 1500, function() {
@@ -147,13 +158,17 @@ var intrigue = function() {
 var danceParty = function() {
   //state 3, dance party. honestly this can probably just be a repeat of intrigue.
 }
+///////////////////////////////////////////////////////////////////////////////
+//These 3 methods are a fake RGB channel to turn on and off led button lights
+// var buttonState1 = function(){ buttonChannel.setRgb(100,0,0); }
+//
+// var buttonState2 = function(){ buttonChannel.setRgb(0,100,0); }
+//
+// var buttonState3 = function(){ buttonChannel.setRgb(0,0,100); }
 
-
-
-
-
-
+/////////////////////////////////////Exports////////////////////////////////////
 module.exports.wait = wait;
+module.exports.acknowledge = acknowledge;
 module.exports.inspire1 = inspire1;
 module.exports.inspire2 = inspire2;
 module.exports.inspire3 = inspire3;
