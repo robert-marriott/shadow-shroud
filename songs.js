@@ -55,8 +55,8 @@ var playSongs = function(state,numSongs){
     omx.play('state1.mp3', {audioOutput: 'local'});
   }
   else if(state==2){ //play intro, 1 song, outro.
-    var queue = ['/state2/state2start.mp3',pickRandom(1).toString(),'/state2/state2start.mp3'];
-    omx.setVideoDir('/home/pi/shadow-shroud/songs/');
+    var queue = ['/home/pi/shadow-shroud/songs/state2/state2start.mp3',pickRandom(1).toString(),'/home/pi/shadow-shroud/songs/state2/state2end.mp3'];
+    omx.setVideoDir('/home/pi/shadow-shroud/songs/state3/');
     omx.play(queue, {audioOutput: 'local'});
   }
   else if(state==3){

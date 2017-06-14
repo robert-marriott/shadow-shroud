@@ -120,6 +120,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
         console.log("loop run time is: ["+testTime+"] Clear interval");
         globalState = 0; //loop ran its course, set state to wait for switch case. .
         clearInterval(inspireTimer);
+        songs.stopSongs();
         btns[1].enableAlert(); // Start events emitted from button 2
         btns[2].enableAlert(); // Start events emitted from button 3
         acknowledgeButtonPress(-1);
