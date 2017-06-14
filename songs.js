@@ -33,7 +33,7 @@ fs.readdir(state3Folder, (err, files) => {
     state3names.push(file);
   });
 });
-setTimeout(function(){
+// setTimeout(function(){
   for(var i = 0;i<state3names.length;i++){
     var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
     var tmp2 = state3names[i].toString();
@@ -45,7 +45,7 @@ setTimeout(function(){
       mp3Durations.push(dur);
     });
   }
-},500);
+// },500);
 
 //////////////////////////////////////////////////////////////////////////
 //Picks random songs from a bank and stores them in an array as strings.
