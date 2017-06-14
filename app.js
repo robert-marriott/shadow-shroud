@@ -61,7 +61,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
 
   //Input pins for 3 large red arcade buttons. Buttons changed to pullup because I2C bus has 1.8k pullups on
   //by default. being experimented on 6/10
-  for (var i = 0; i<btnPins.length-1; i++) {
+  for (var i = 0; i<btnPins.length; i++) {
     var btn = new Gpio(btnPins[i], {
       mode: Gpio.INPUT,
       pullUpDown: Gpio.PUD_UP,
@@ -70,13 +70,13 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     });
     btns.push(btn);
   }
-  var btn3 = new Gpio(btnPins[2], {
-    mode: Gpio.INPUT,
-    pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.RISING_EDGE,
-    alert: true
-  });
-  btns.push(btn3);
+  // var btn3 = new Gpio(btnPins[2], {
+  //   mode: Gpio.INPUT,
+  //   // pullUpDown: Gpio.PUD_DOWN,
+  //   edge: Gpio.RISING_EDGE,
+  //   alert: true
+  // });
+  // btns.push(btn3);
 
   ////////////////////////////////////////////////////////////////////////////////
   // There are going to be 5 states.
@@ -282,7 +282,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
     }
   },200));;//end switch case for BUTTON 2-----------------------------------------------
 
-  btns[2].on('Alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
+  btns[2].on('alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
     console.log("button 3 interrupt detected");
     console.log("--------------Switch function for Button 3-----------------");
     console.log("[globalState] state is currently: "+globalState);
