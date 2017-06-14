@@ -137,10 +137,10 @@ module.exports.totalSongDuration = totalSongDuration;
 //   playSongs(3,3);
 //
 // },1000);
-setTimeout(function(){
-  pickRandom(3);
-  setTimeout(function(){
-    console.log(mp3Durations);
-    // console.log("Selected Durations of picked songs\n"+selectedDurations);
-  },1000);
-},1000);
+// setTimeout(function(){
+//   pickRandom(3);
+//   setTimeout(function(){
+//     console.log(mp3Durations);
+//     // console.log("Selected Durations of picked songs\n"+selectedDurations);
+//   },1000);
+// },1000);
