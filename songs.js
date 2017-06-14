@@ -51,7 +51,7 @@ fs.readdir(state3Folder, (err, files) => {
 var pickRandom = function(songCount){
   var requestedSongs = [];
   selectedDurations = []; //clear selected durations whenever random songs are picked
-
+  console.log("THIS IS MP3DURATIONS AT THE START OF RANDOM: "+mp3Durations);
   for(var i = 0;i<songCount;i++){
     var randInt = randomInt(0,state3names.length-1);
       var song = state3names[randInt];
