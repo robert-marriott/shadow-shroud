@@ -155,7 +155,7 @@ var mp3Durations = [315	, 223	,
 255	,
 182];
 
-var songList = [
+var state3names = [
 "Adrian Lux - Damaged (Original Mix).mp3",
 "AHA - Take On Me.mp3",
 "Alejandro.mp3",
