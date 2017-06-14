@@ -13,14 +13,10 @@ process.argv.forEach(function (val, index, array) {
 const Gpio = require('pigpio').Gpio;
 const _ = require('lodash');
 const sleep = require('sleep'); //debugging
-// var lame = require("lame");
-// var Speaker = require("speaker");
-// var player = require("player");
-// const StreamPlayer = require('streamplayer');
-// var Omx = require('node-omxplayer');
 
-var colors = require("./colors.js");
-// var songs = require("./songs.js"); //songs.js creates song objects and lists
+
+var colors = require("./colors.js"); //colors.js has RGB fading information
+var songs = require("./songs.js"); //songs.js creates song objects and lists
 
 ////////////////////////Pin Assignments/////////////////////////////////
 // change these to match your LED GPIO pins :
@@ -60,7 +56,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   }
 
   //Input pins for 3 large red arcade buttons. Buttons changed to pullup because I2C bus has 1.8k pullups on
-  //by default. being experimented on 6/10
+  //by default.
   for (var i = 0; i<btnPins.length; i++) {
     var btn = new Gpio(btnPins[i], {
       mode: Gpio.INPUT,
@@ -70,13 +66,6 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     });
     btns.push(btn);
   }
-  // var btn3 = new Gpio(btnPins[2], {
-  //   mode: Gpio.INPUT,
-  //   // pullUpDown: Gpio.PUD_DOWN,
-  //   edge: Gpio.RISING_EDGE,
-  //   alert: true
-  // });
-  // btns.push(btn3);
 
   ////////////////////////////////////////////////////////////////////////////////
   // There are going to be 5 states.
@@ -205,13 +194,14 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     console.log("\n------------acknowledgeButtonPress function triggered-----------");
     console.log("In acknowledgebuttonpress function. [globalState] is "+globalState);
     console.log("Button: "+btn+" press acknowledged");
+    colors.acknowledge();
     //Bright white, then fade to black before proceeding to next function.
-    for(var j = 0; j<acknowledgeArray.length;j++){
-      for(var i = 0; i<leds.length; i++){
-        leds[i].pwmWrite(acknowledgeArray[j]);
-      } //end led pwm writing loop
-      sleep.msleep(20)
-    } //end acknowledgeArray loop
+    // for(var j = 0; j<acknowledgeArray.length;j++){
+    //   for(var i = 0; i<leds.length; i++){
+    //     leds[i].pwmWrite(acknowledgeArray[j]);
+    //   } //end led pwm writing loop
+    //   sleep.msleep(20)
+    // } //end acknowledgeArray loop
   }
 
 //////////////////////////////Supporting Methods////////////////////////////////
@@ -241,6 +231,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       case 0: //IF BUTTON 1 PRESSED IN WAIT MODE
         globalState=1; //If in wait mode, set state to 1 (intro)
         acknowledgeButtonPress(1); //Flash to Acknowledge state change
+        songs.playSongs(1,0); //load up the inspire song
         btns[1].disableAlert(); // Stop events emitted from button 2
         btns[2].disableAlert(); // Stop events emitted from button 3
         inspire(); //go to state 1
@@ -248,6 +239,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       case 1: //IF BUTTON 1 PRESSED IN STATE 1 (INTRO)
         globalState=0; //If in button 1, return to wait mode 0
         acknowledgeButtonPress(1);
+        songs.stopSongs();
         btns[1].enableAlert(); // Start events emitted from button 2
         btns[2].enableAlert(); // Start events emitted from button 3
         waitForInput();
@@ -266,6 +258,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       case 0: //IF BUTTON 2 PRESSED IN WAIT MODE
         globalState=2; //If in wait mode, set state to 1 (intro)
         acknowledgeButtonPress(2); //Flash to Acknowledge state change
+        songs.playSongs(2,1);
         btns[0].disableAlert(); // Stop events emitted from button 2
         btns[2].disableAlert(); // Stop events emitted from button 3
         intrigue(); //go to state 1
@@ -273,6 +266,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       case 2: //IF BUTTON 2 PRESSED IN STATE 2 (Intrigue)
         globalState=0; //If in button 1, return to wait mode 0
         acknowledgeButtonPress(2);
+        songs.stopSongs();
         btns[0].enableAlert(); // Start events emitted from button 2
         btns[2].enableAlert(); // Start events emitted from button 3
         waitForInput();
@@ -291,6 +285,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       case 0: //IF BUTTON 3 PRESSED IN WAIT MODE
         globalState=3; //If in wait mode, set state to 1 (intro)
         acknowledgeButtonPress(3); //Flash to Acknowledge state change
+        songs.playSongs(3,3);
         btns[0].disableAlert(); // Stop events emitted from button 2
         btns[1].disableAlert(); // Stop events emitted from button 3
         danceParty(); //go to state 1
@@ -298,6 +293,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       case 3: //IF BUTTON 3 PRESSED IN STATE 3 (danceParty)
         globalState=0; //If in button 1, return to wait mode 0
         acknowledgeButtonPress(3);
+        songs.stopSongs();
         btns[0].enableAlert(); // Start events emitted from button 2
         btns[1].enableAlert(); // Start events emitted from button 3
         waitForInput();

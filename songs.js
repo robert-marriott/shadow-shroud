@@ -32,13 +32,6 @@ fs.readdir(state3Folder, (err, files) => {
   });
 });
 //////////////////////////////////////////////////////////////////////////
-// setTimeout(function(){ //For debug purposes.
-//   console.log("Available songs in dance party song bank: ")
-//   console.log(state3names);
-//   console.log("Available songs in button press prerequisites: ")
-//   console.log(state2names);
-// },2000);
-//////////////////////////////////////////////////////////////////////////
 //Picks random songs from a bank and stores them in an array as strings.
 var pickRandom = function(songCount){
   var requestedSongs = [];
@@ -50,8 +43,10 @@ var pickRandom = function(songCount){
       }
   }
 }
-
-function randomInt(min,max){ return Math.floor(Math.random()*(max-min+1)+min); }
+//Clean random method with a min and max value
+function randomInt(min,max){
+  return Math.floor(Math.random()*(max-min+1)+min);
+}
 //////////////////////////////////////////////////////////////////////////
 //Initialize OMX objects for player.
 var playSongs = function(state,numSongs){
@@ -75,7 +70,11 @@ var playSongs = function(state,numSongs){
 }
 
 var getStatus = function(){
-  return omx.getStatus().playing;
+  return omx.isPlaying();
+}
+
+var stopSongs = function(){
+  omx.stop();
 }
 /////////////////////////////////////Exports////////////////////////////////////
 module.exports.state1names = state1names;
@@ -84,15 +83,17 @@ module.exports.state3names = state3names;
 module.exports.pickRandom = pickRandom;
 module.exports.playSongs = playSongs;
 module.exports.getStatus = getStatus;
+modules.exports.stopSongs = stopSongs;
 module.exports.omx = omx;
 
+/////////////////////////////////////Debug shtuff///////////////////////////////
 // setTimeout(function(){
 //   console.log("Three random songs:");
 //   console.log(pickRandom(5));
 // },1000);
 
-setTimeout(function(){
-  console.log("Three random songs:");
-  playSongs(3,3);
-
-},1000);
+// setTimeout(function(){
+//   console.log("Three random songs:");
+//   playSongs(3,3);
+//
+// },1000);
