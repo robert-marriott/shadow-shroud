@@ -138,14 +138,14 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     console.log("In intrigue function (state 2). [globalState] is "+globalState);
     console.log("Starting omxplayer, total song duration is "+songs.totalSongDuration());
     var loopTime = Date.now(); //function starts, begin timer.
-
+    var aggregateTime = songs.totalSongDuration()+20000;
     intrigueTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
 
-      if(testTime<songs.totalSongDuration()+10000){
-        console.log("loop run time is: ["+testTime+"] and running intrigue");
-        console.log("status of omxplayer is: "+songs.getStatus());
+      if(testTime<aggregateTime){
+        console.log("loop run time is: ["+testTime+"] running intrigue. Target time is: "+aggregateTime);
+        // console.log("status of omxplayer is: "+songs.getStatus());
         colors.intrigue();
       } else{
         songs.stopSongs();
@@ -170,12 +170,14 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   function danceParty(){
     console.log("\n---------------danceParty function triggered------------------");
     console.log("In danceParty function (state 3). [globalState] is "+globalState);
+    console.log("Starting omxplayer, total song duration is "+songs.totalSongDuration());
     var loopTime = Date.now(); //function starts, begin timer.
     partyTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
-      if(testTime<songs.totalSongDuration()+10000){ //check omxplayer status. if playingm, continue loop.
-        console.log("loop run time is: ["+testTime+"] and running danceParty");
+      var aggregateTime = songs.totalSongDuration()+20000;
+      if(testTime<aggregateTime){ //check omxplayer status. if playingm, continue loop.
+        console.log("loop run time is: ["+testTime+"] running danceParty. Target time: "+aggregateTime);
         colors.intrigue();
       } else{
           songs.stopSongs();
