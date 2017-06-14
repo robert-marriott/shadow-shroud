@@ -35,9 +35,13 @@ fs.readdir(state3Folder, (err, files) => {
 });
 setTimeout(function(){
   for(var i = 0;i<state3names.length;i++){
-    mp3Duration('/home/pi/shadow-shroud/songs/state3/'+state3names[i], function (err, duration) {
+    var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
+    var tmp2 = state3names[i].toString();
+    var path = tmp1.concat(tmp2);
+    mp3Duration(path, function (err, duration) {
       if (err) return console.log(err.message);
       var dur = duration;
+      console.log("enumerating mp3 duration list. current entry: "+dur);
       mp3Durations.push(dur);
     });
   }
