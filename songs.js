@@ -5,7 +5,7 @@
 // ================================================================== //
 const fs = require('fs');
 var omx = require('omxdirector');
-var mp3Duration = require('mp3-duration');
+var mp3Length = require('mp3-length');
 
 ///////////////////////////////File locations///////////////////////////////////
 const state1Folder = './songs/state1/';
@@ -38,7 +38,7 @@ fs.readdir(state3Folder, (err, files) => {
     var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
     var tmp2 = state3names[i].toString();
     var path = tmp1.concat(tmp2);
-    mp3Duration(path, function (err, duration) {
+    mp3Length(path, function (err, duration) {
       if (err) return console.log(err.message);
       var dur = duration;
       console.log("enumerating mp3 duration list. current entry: "+dur);
