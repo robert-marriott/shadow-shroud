@@ -55,6 +55,8 @@ var pickRandom = function(songCount){
     var randInt = randomInt(0,state3names.length-1);
       var song = state3names[randInt];
       var dur = parseInt(mp3Durations[randInt]);
+      console.log("song is evaluating to: "+song);
+      console.log("mp3Durations["+randInt"] is evaulating to: "+mp3Durations[randInt]))
       console.log("dur is evaluating to: "+dur);
       selectedDurations.push(dur);
       requestedSongs.push(song);
