@@ -39,7 +39,7 @@ fs.readdir(state3Folder, (err, files) => {
     mp3Length(path, function (err, duration) {
       if (err) return console.log(err.message);
       var dur = duration;
-      console.log("enumerating mp3 duration list. current entry: "+dur);
+      // console.log("enumerating mp3 duration list. current entry: "+dur);
       mp3Durations.push(dur);
     });
   } //end song second counts
@@ -54,7 +54,8 @@ var pickRandom = function(songCount){
   for(var i = 0;i<songCount;i++){
     var randInt = randomInt(0,state3names.length-1);
       var song = state3names[randInt];
-      selectedDurations.push(mp3Durations[randInt]);
+      var dur = parseInt(mp3Durations[randInt]);
+      selectedDurations.push(dur);
       requestedSongs.push(song);
       console.log("Random songs picked:\n"+requestedSongs);
       console.log("Song durations of these songs:"+selectedDurations);
@@ -138,7 +139,6 @@ module.exports.totalSongDuration = totalSongDuration;
 setTimeout(function(){
   pickRandom(3);
   setTimeout(function(){
-    console.log(mp3Durations);
-    // console.log("Selected Durations of picked songs\n"+selectedDurations);
+    console.log("Selected Durations of picked songs\n"+selectedDurations);
   },1000);
 },1000);
