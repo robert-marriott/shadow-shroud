@@ -3,37 +3,39 @@
 // Generates lists and object collections so mp3's can be played      //
 // in the main program with less visual clutter                       //
 // ================================================================== //
-const fs = require('fs');
+// const fs = require('fs');
 var omx = require('omxdirector');
 // var mp3Length = require('mp3-length');
 
 var lists = require("./lists.js");
 ///////////////////////////////File locations///////////////////////////////////
-const state1Folder = './songs/state1/';
-const state2Folder = './songs/state2/';
-const state3Folder = './songs/state3/';
+// const state1Folder = './songs/state1/';
+// const state2Folder = './songs/state2/';
+// const state3Folder = './songs/state3/';
 
-var state1names = [];
-var state2names = [];
-var state3names = [];
+// var state1names = [];
+var state2names = lists.state2names;
+var state3names = lists.state3names;
 var mp3Durations = lists.mp3Durations;
 var selectedDurations = [];
+console.log("state3names.length is: "+state3names.length);
+console.log("mp3Durations.length is: "+mp3Durations.length);
 ///////////////////////// Populate arrays of songs ////////////////////////
-fs.readdir(state1Folder, (err, files) => {
-  files.forEach(file => {
-    state1names.push(file);
-  });
-});
-fs.readdir(state2Folder, (err, files) => {
-  files.forEach(file => {
-    state2names.push(file);
-  });
-});
-fs.readdir(state3Folder, (err, files) => {
-  files.forEach(file => {
-    state3names.push(file);
-  });
-  console.log("THIS IS STATE3NAMES.LENGTH: "+state3names.length);
+// fs.readdir(state1Folder, (err, files) => {
+//   files.forEach(file => {
+//     state1names.push(file);
+//   });
+// });
+// fs.readdir(state2Folder, (err, files) => {
+//   files.forEach(file => {
+//     state2names.push(file);
+//   });
+// });
+// fs.readdir(state3Folder, (err, files) => {
+//   files.forEach(file => {
+//     state3names.push(file);
+//   });
+  // console.log("THIS IS STATE3NAMES.LENGTH: "+state3names.length);
   // for(var i = 0;i<state3names.length;i++){//make song second counts after fs read
   //   var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
   //   var tmp2 = state3names[i].toString();
@@ -45,7 +47,7 @@ fs.readdir(state3Folder, (err, files) => {
   //     mp3Durations.push(dur);
   //   });
   // } //end song second counts
-});
+// });
 
 //////////////////////////////////////////////////////////////////////////
 //Picks random songs from a bank and stores them in an array as strings.
@@ -120,9 +122,9 @@ var totalSongDuration = function(){
 }
 
 /////////////////////////////////////Exports////////////////////////////////////
-module.exports.state1names = state1names;
-module.exports.state2names = state2names;
-module.exports.state3names = state3names;
+// module.exports.state1names = state1names;
+// module.exports.state2names = state2names;
+// module.exports.state3names = state3names;
 module.exports.pickRandom = pickRandom;
 module.exports.playSongs = playSongs;
 module.exports.getStatus = getStatus;
