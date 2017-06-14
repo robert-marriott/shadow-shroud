@@ -41,13 +41,13 @@ setTimeout(function(){
       mp3Durations.push(dur);
     });
   }
-},2000);
+},500);
 
 //////////////////////////////////////////////////////////////////////////
 //Picks random songs from a bank and stores them in an array as strings.
 var pickRandom = function(songCount){
   var requestedSongs = [];
-  selectedDurations.length = 0; //clear selected durations whenever random songs are picked
+  selectedDurations = []; //clear selected durations whenever random songs are picked
 
   for(var i = 0;i<songCount;i++){
     var randInt = randomInt(0,state3names.length-1);
