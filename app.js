@@ -87,6 +87,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
 
     var loopTime = Date.now(); //function starts, begin timer.
 
+    colors.wait();
     waitTimer = setInterval(function(){
       var currentTime = Date.now();
       var testTime = currentTime - loopTime;
@@ -113,7 +114,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       } else if (testTime>=40000 && testTime < 160000){
         console.log("loop run time is: ["+testTime+"] and running inspire2");
         colors.inspire2();
-      } else if (testTime>=160000 && testTime < 205000){
+      } else if (testTime>=160000 && testTime < 210000){
         console.log("loop run time is: ["+testTime+"] and running inspire3");
         colors.inspire3();
       } else {
@@ -135,16 +136,17 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   function intrigue(){
     console.log("\n-----------------intrigue function triggered------------------");
     console.log("In intrigue function (state 2). [globalState] is "+globalState);
-    var singleSongLength = 30000;
     var loopTime = Date.now(); //function starts, begin timer.
 
     intrigueTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
-      if (testTime < singleSongLength){ //this will be the length of a random song.
+      // if (testTime < singleSongLength){ //this will be the length of a random song.
+      if(songs.getStatus()){
         console.log("loop run time is: ["+testTime+"] and running intrigue");
         colors.intrigue();
       } else{
+        songs.stopSongs();
         console.log("loop run time is: ["+testTime+"] State completed. Clear interval");
         globalState = 0; //loop ran its course, set state to wait for switch case. .
         clearInterval(intrigueTimer);
