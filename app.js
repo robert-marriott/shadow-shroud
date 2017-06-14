@@ -136,12 +136,13 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   function intrigue(){
     console.log("\n-----------------intrigue function triggered------------------");
     console.log("In intrigue function (state 2). [globalState] is "+globalState);
+    console.log("Starting omxplayer, total song duration is "+songs.totalSongDuration());
     var loopTime = Date.now(); //function starts, begin timer.
 
     intrigueTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
-      // if (testTime < singleSongLength){ //this will be the length of a random song.
+
       if(testTime<songs.totalSongDuration()+10000){
         console.log("loop run time is: ["+testTime+"] and running intrigue");
         console.log("status of omxplayer is: "+songs.getStatus());
