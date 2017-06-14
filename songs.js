@@ -70,7 +70,11 @@ var playSongs = function(state,numSongs){
 }
 
 var getStatus = function(){
-  return omx.isPlaying();
+
+var status = omx.getStatus();
+var tmp = Object.values(status);
+return tmp[3];
+  // return omx.isPlaying();
 }
 
 var stopSongs = function(){

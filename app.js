@@ -144,6 +144,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       // if (testTime < singleSongLength){ //this will be the length of a random song.
       if(songs.getStatus()){
         console.log("loop run time is: ["+testTime+"] and running intrigue");
+        console.log("status of omxplayer is: "+songs.getStatus());
         colors.intrigue();
       } else{
         songs.stopSongs();
@@ -175,17 +176,17 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     partyTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
-      if (testTime < singleSongLength){ //this will be the length of a random song.
+      if(songs.getStatus()){ //check omxplayer status. if playingm, continue loop.
         console.log("loop run time is: ["+testTime+"] and running intrigue");
         colors.intrigue();
       } else{
-        console.log("loop run time is: ["+testTime+"] Clear interval");
-        globalState = 0; //loop ran its course, set state to wait for switch case. .
-        clearInterval(partyTimer);
-        btns[0].enableAlert(); // Start events emitted from button 2
-        btns[1].enableAlert(); // Start events emitted from button 3
-        acknowledgeButtonPress(-1);
-        waitForInput();
+          console.log("loop run time is: ["+testTime+"] Clear interval");
+          globalState = 0; //loop ran its course, set state to wait for switch case. .
+          clearInterval(partyTimer);
+          btns[0].enableAlert(); // Start events emitted from button 2
+          btns[1].enableAlert(); // Start events emitted from button 3
+          acknowledgeButtonPress(-1);
+          waitForInput();
       }
     },8000);
   }
