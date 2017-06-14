@@ -32,6 +32,7 @@ fs.readdir(state3Folder, (err, files) => {
   files.forEach(file => {
     state3names.push(file);
   });
+  console.log("THIS IS STATE3NAMES.LENGTH: "+state3names.length);
   for(var i = 0;i<state3names.length;i++){//make song second counts after fs read
     var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
     var tmp2 = state3names[i].toString();
