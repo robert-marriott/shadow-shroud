@@ -72,7 +72,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
   }
   var btn3 = new Gpio(btnPins[2], {
     mode: Gpio.INPUT,
-    pullUpDown: Gpio.PUD_UP,
+    pullUpDown: Gpio.PUD_DOWN,
     edge: Gpio.RISING_EDGE,
     alert: true
   });
