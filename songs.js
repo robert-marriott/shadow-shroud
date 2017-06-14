@@ -83,7 +83,7 @@ module.exports.state3names = state3names;
 module.exports.pickRandom = pickRandom;
 module.exports.playSongs = playSongs;
 module.exports.getStatus = getStatus;
-modules.exports.stopSongs = stopSongs;
+module.exports.stopSongs = stopSongs;
 module.exports.omx = omx;
 
 /////////////////////////////////////Debug shtuff///////////////////////////////
