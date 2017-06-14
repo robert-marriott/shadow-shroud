@@ -32,8 +32,6 @@ fs.readdir(state3Folder, (err, files) => {
   files.forEach(file => {
     state3names.push(file);
   });
-});
-// setTimeout(function(){
   for(var i = 0;i<state3names.length;i++){
     var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
     var tmp2 = state3names[i].toString();
@@ -45,6 +43,9 @@ fs.readdir(state3Folder, (err, files) => {
       mp3Durations.push(dur);
     });
   }
+});
+// setTimeout(function(){
+
 // },500);
 
 //////////////////////////////////////////////////////////////////////////
