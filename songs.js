@@ -5,8 +5,9 @@
 // ================================================================== //
 const fs = require('fs');
 var omx = require('omxdirector');
-var mp3Length = require('mp3-length');
+// var mp3Length = require('mp3-length');
 
+var lists = require("./lists.js");
 ///////////////////////////////File locations///////////////////////////////////
 const state1Folder = './songs/state1/';
 const state2Folder = './songs/state2/';
@@ -15,7 +16,7 @@ const state3Folder = './songs/state3/';
 var state1names = [];
 var state2names = [];
 var state3names = [];
-var mp3Durations = [];
+var mp3Durations = lists.mp3Durations;
 var selectedDurations = [];
 ///////////////////////// Populate arrays of songs ////////////////////////
 fs.readdir(state1Folder, (err, files) => {
@@ -33,17 +34,17 @@ fs.readdir(state3Folder, (err, files) => {
     state3names.push(file);
   });
   console.log("THIS IS STATE3NAMES.LENGTH: "+state3names.length);
-  for(var i = 0;i<state3names.length;i++){//make song second counts after fs read
-    var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
-    var tmp2 = state3names[i].toString();
-    var path = tmp1.concat(tmp2);
-    mp3Length(path, function (err, duration) {
-      if (err) return console.log(err.message);
-      var dur = duration;
-      // console.log("enumerating mp3 duration list. current entry: "+dur);
-      mp3Durations.push(dur);
-    });
-  } //end song second counts
+  // for(var i = 0;i<state3names.length;i++){//make song second counts after fs read
+  //   var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
+  //   var tmp2 = state3names[i].toString();
+  //   var path = tmp1.concat(tmp2);
+  //   mp3Length(path, function (err, duration) {
+  //     if (err) return console.log(err.message);
+  //     var dur = duration;
+  //     // console.log("enumerating mp3 duration list. current entry: "+dur);
+  //     mp3Durations.push(dur);
+  //   });
+  // } //end song second counts
 });
 
 //////////////////////////////////////////////////////////////////////////
@@ -140,9 +141,9 @@ module.exports.totalSongDuration = totalSongDuration;
 //   playSongs(3,3);
 //
 // },1000);
-setInterval(function(){
-  pickRandom(3);
-  setInterval(function(){
-    console.log("Selected Durations of picked songs\n"+selectedDurations);
-  },1000);
-},1000);
+// setInterval(function(){
+//   pickRandom(3);
+//   setInterval(function(){
+//     console.log("Selected Durations of picked songs\n"+selectedDurations);
+//   },1000);
+// },1000);
