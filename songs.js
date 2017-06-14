@@ -140,9 +140,9 @@ module.exports.totalSongDuration = totalSongDuration;
 //   playSongs(3,3);
 //
 // },1000);
-setTimeout(function(){
+setInterval(function(){
   pickRandom(3);
-  setTimeout(function(){
+  setInterval(function(){
     console.log("Selected Durations of picked songs\n"+selectedDurations);
   },1000);
 },1000);
