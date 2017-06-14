@@ -136,6 +136,7 @@ module.exports.totalSongDuration = totalSongDuration;
 setTimeout(function(){
   pickRandom(3);
   setTimeout(function(){
-    console.log("Selected Durations of picked songs\n"+selectedDurations);
+    console.log(mp3Durations);
+    // console.log("Selected Durations of picked songs\n"+selectedDurations);
   },1000);
 },1000);
