@@ -72,7 +72,9 @@ var playSongs = function(state,numSongs){
 var getStatus = function(){
 
 var status = omx.getStatus();
-var tmp = Object.values(status);
+var tmp = Object.keys(status).map(function(key){
+  return status[key];
+});
 return tmp[3];
   // return omx.isPlaying();
 }
