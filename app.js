@@ -142,7 +142,7 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
       // if (testTime < singleSongLength){ //this will be the length of a random song.
-      if(songs.getStatus()){
+      if(testTime<songs.totalSongDuration()+10000){
         console.log("loop run time is: ["+testTime+"] and running intrigue");
         console.log("status of omxplayer is: "+songs.getStatus());
         colors.intrigue();
@@ -176,10 +176,11 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     partyTimer = setInterval(function(){ //run this every 8 seconds, checking for various song parts.
       currentTime = Date.now();
       var testTime = currentTime - loopTime;
-      if(songs.getStatus()){ //check omxplayer status. if playingm, continue loop.
+      if(testTime<songs.totalSongDuration()+10000){ //check omxplayer status. if playingm, continue loop.
         console.log("loop run time is: ["+testTime+"] and running intrigue");
         colors.intrigue();
       } else{
+          songs.stopSongs();
           console.log("loop run time is: ["+testTime+"] Clear interval");
           globalState = 0; //loop ran its course, set state to wait for switch case. .
           clearInterval(partyTimer);
@@ -199,13 +200,6 @@ var acknowledgeArray = [255,255,255,255,255,255,255,255,255,255,255,
     console.log("In acknowledgebuttonpress function. [globalState] is "+globalState);
     console.log("Button: "+btn+" press acknowledged");
     colors.acknowledge();
-    //Bright white, then fade to black before proceeding to next function.
-    // for(var j = 0; j<acknowledgeArray.length;j++){
-    //   for(var i = 0; i<leds.length; i++){
-    //     leds[i].pwmWrite(acknowledgeArray[j]);
-    //   } //end led pwm writing loop
-    //   sleep.msleep(20)
-    // } //end acknowledgeArray loop
   }
 
 //////////////////////////////Supporting Methods////////////////////////////////

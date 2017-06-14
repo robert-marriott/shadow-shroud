@@ -4,8 +4,8 @@
 // in the main program with less visual clutter                       //
 // ================================================================== //
 const fs = require('fs');
-// const omx = require('node-omx');
 var omx = require('omxdirector');
+var mp3Duration = require('mp3-duration');
 
 ///////////////////////////////File locations///////////////////////////////////
 const state1Folder = './songs/state1/';
@@ -15,6 +15,8 @@ const state3Folder = './songs/state3/';
 var state1names = [];
 var state2names = [];
 var state3names = [];
+var mp3Durations = [];
+var selectedDurations = [];
 ///////////////////////// Populate arrays of songs ////////////////////////
 fs.readdir(state1Folder, (err, files) => {
   files.forEach(file => {
@@ -31,12 +33,26 @@ fs.readdir(state3Folder, (err, files) => {
     state3names.push(file);
   });
 });
+setTimeout(function(){
+  for(var i = 0;i<state3names.length;i++){
+    mp3Duration(state3names[i], function (err, duration) {
+      if (err) return console.log(err.message);
+      var dur = duration;
+      mp3Durations.push(dur);
+    });
+  }
+},2000);
+
 //////////////////////////////////////////////////////////////////////////
 //Picks random songs from a bank and stores them in an array as strings.
 var pickRandom = function(songCount){
   var requestedSongs = [];
+  selectedDurations.length = 0; //clear selected durations whenever random songs are picked
+
   for(var i = 0;i<songCount;i++){
-      var song = state3names[randomInt(0,state3names.length-1)];
+    var randInt = randomInt(0,state3names.length-1);
+      var song = state3names[randInt];
+      selectedDurations.push(mp3Durations[randInt]);
       requestedSongs.push(song);
       if(i==songCount-1){
         return requestedSongs;
@@ -82,6 +98,17 @@ return tmp[3];
 var stopSongs = function(){
   omx.stop();
 }
+
+var totalSongDuration = function(){
+  var playTime = 0;
+  for(var i = 0;i<selectedDurations.length;i++){
+    playTime+=selectedDurations[i];
+    if(i==selectedDurations.length-1){
+      return playTime*1000;
+    }
+  }
+}
+
 /////////////////////////////////////Exports////////////////////////////////////
 module.exports.state1names = state1names;
 module.exports.state2names = state2names;
@@ -91,6 +118,7 @@ module.exports.playSongs = playSongs;
 module.exports.getStatus = getStatus;
 module.exports.stopSongs = stopSongs;
 module.exports.omx = omx;
+module.exports.totalSongDuration = totalSongDuration;
 
 /////////////////////////////////////Debug shtuff///////////////////////////////
 // setTimeout(function(){
