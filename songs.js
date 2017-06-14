@@ -54,6 +54,8 @@ var pickRandom = function(songCount){
       var song = state3names[randInt];
       selectedDurations.push(mp3Durations[randInt]);
       requestedSongs.push(song);
+      console.log("Random songs picked:\n"+requestedSongs);
+      console.log("Song durations of these songs:"+selectedDurations);
       if(i==songCount-1){
         return requestedSongs;
       }
