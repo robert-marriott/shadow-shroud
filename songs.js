@@ -144,6 +144,7 @@ module.exports.totalSongDuration = totalSongDuration;
 //     // console.log("Selected Durations of picked songs\n"+selectedDurations);
 //   },1000);
 // },1000);
-
-console.log(state3names);
-console.log(mp3Durations);
+setInterval(function(){
+  console.log(state3names);
+  console.log(mp3Durations);
+},10000);
