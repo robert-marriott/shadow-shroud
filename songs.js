@@ -32,7 +32,7 @@ fs.readdir(state3Folder, (err, files) => {
   files.forEach(file => {
     state3names.push(file);
   });
-  for(var i = 0;i<state3names.length;i++){
+  for(var i = 0;i<state3names.length;i++){//make song second counts after fs read
     var tmp1 = "/home/pi/shadow-shroud/songs/state3/";
     var tmp2 = state3names[i].toString();
     var path = tmp1.concat(tmp2);
@@ -42,11 +42,8 @@ fs.readdir(state3Folder, (err, files) => {
       console.log("enumerating mp3 duration list. current entry: "+dur);
       mp3Durations.push(dur);
     });
-  }
+  } //end song second counts
 });
-// setTimeout(function(){
-
-// },500);
 
 //////////////////////////////////////////////////////////////////////////
 //Picks random songs from a bank and stores them in an array as strings.
@@ -138,14 +135,10 @@ module.exports.totalSongDuration = totalSongDuration;
 //   playSongs(3,3);
 //
 // },1000);
-// setTimeout(function(){
-//   pickRandom(3);
-//   setTimeout(function(){
-//     console.log(mp3Durations);
-//     // console.log("Selected Durations of picked songs\n"+selectedDurations);
-//   },1000);
-// },1000);
-setInterval(function(){
-  console.log(state3names);
-  console.log(mp3Durations);
-},10000);
+setTimeout(function(){
+  pickRandom(3);
+  setTimeout(function(){
+    console.log(mp3Durations);
+    // console.log("Selected Durations of picked songs\n"+selectedDurations);
+  },1000);
+},1000);
