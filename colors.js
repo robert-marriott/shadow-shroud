@@ -49,9 +49,9 @@ var acknowledge = function(){
  channel2.setRgb(white);
  channel3.setRgb(white);
 
- channel1.fadeRgb(black,1000);
- channel2.fadeRgb(black,1000);
- channel3.fadeRgb(black,1000);
+ channel1.fadeRgb(black,1500);
+ channel2.fadeRgb(black,1500);
+ channel3.fadeRgb(black,1500);
 }
 ///////////////////////////////////////////////////////////////////////////////
 var wait = function(){ //Loop this on waitForInput. Cool fading with some purple.

@@ -245,7 +245,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       default:
       console.log("Fail on button press 1");
     }
-  },200));//end switch case for BUTTON 1. Debounced 100ms-------------------------
+  },300));//end switch case for BUTTON 1. Debounced 100ms-------------------------
 
   btns[1].on('alert', _.debounce(function () { //IF BUTTON 2 IS HIT----------------------
     console.log("\nbutton 2 interrupt detected");
@@ -272,7 +272,7 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       default:
       console.log("Fail on button press 2");
     }
-  },200));;//end switch case for BUTTON 2-----------------------------------------------
+  },300));;//end switch case for BUTTON 2-----------------------------------------------
 
   btns[2].on('alert', _.debounce(function () { //IF BUTTON 3 IS HIT-------------------------
     console.log("button 3 interrupt detected");
@@ -299,4 +299,4 @@ function blackenLEDs(){ //Turns LED's to black between transitions
       default:
       console.log("Fail on button press 3");
     }
-  },200));;//end switch case for BUTTON 3-----------------------------------------------
+  },300));;//end switch case for BUTTON 3-----------------------------------------------
